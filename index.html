@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>四國遍路旅 🙏</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fff8f0;--card:#fff;--primary:#e65100;--primary-light:#ffb74d;
+  --accent:#ff8a65;--text:#333;--text-light:#777;--shadow:0 2px 12px rgba(230,81,0,.12);
+  --radius:16px;
+}
+body{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);padding-bottom:80px;-webkit-tap-highlight-color:transparent}
+/* top bar */
+.topbar{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#e65100,#ff8a65);color:#fff;padding:14px 16px 10px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.topbar h1{font-size:18px;font-weight:700;letter-spacing:1px}
+.topbar .subtitle{font-size:12px;opacity:.85;margin-top:2px}
+/* day tabs */
+.day-tabs{display:flex;overflow-x:auto;gap:8px;padding:12px 16px;position:sticky;top:62px;z-index:99;background:var(--bg);scrollbar-width:none;-ms-overflow-style:none}
+.day-tabs::-webkit-scrollbar{display:none}
+.day-tab{flex-shrink:0;padding:8px 16px;border-radius:20px;background:#fff;border:2px solid #ffe0cc;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap}
+.day-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);transform:scale(1.05)}
+.day-tab .tab-date{font-size:10px;font-weight:400;opacity:.7;display:block}
+/* search */
+.search-wrap{padding:8px 16px}
+.search-wrap input{width:100%;padding:10px 14px 10px 38px;border-radius:12px;border:2px solid #ffe0cc;font-size:14px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%23999' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") 12px center no-repeat;outline:none;transition:.2s}
+.search-wrap input:focus{border-color:var(--primary)}
+/* hotel info bar */
+.hotel-bar{margin:8px 16px;padding:12px 14px;background:linear-gradient(135deg,#ffe0b2,#fff3e0);border-radius:var(--radius);display:none;font-size:13px;line-height:1.6}
+.hotel-bar.show{display:block}
+.hotel-bar .hotel-name{font-weight:700;font-size:14px;color:#e65100}
+.hotel-bar .hotel-detail{color:#555}
+.hotel-bar a{color:#e65100;text-decoration:underline}
+/* timeline */
+.timeline{padding:0 16px}
+.timeline-item{position:relative;padding-left:28px;margin-bottom:4px}
+.timeline-item::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:#e0d6f0}
+.timeline-item:last-child::before{display:none}
+.timeline-dot{position:absolute;left:2px;top:14px;width:14px;height:14px;border-radius:50%;border:3px solid var(--primary);background:#fff;z-index:1}
+.timeline-item.meal .timeline-dot{border-color:#e8a0bf;background:#fce4ec}
+.timeline-item.transport .timeline-dot{border-color:#6fa8dc;background:#e3f2fd}
+.timeline-item.hotel .timeline-dot{border-color:#34a853;background:#e8f5e9}
+.timeline-item.drive .timeline-dot{border-color:#2e7d32;background:#e8f5e9}
+.tag.drive-link{background:#e8f5e9;color:#2e7d32;cursor:pointer;text-decoration:none}
+.tag.drive-link:hover{background:#c8e6c9}
+.card{background:var(--card);border-radius:var(--radius);padding:14px;margin-bottom:8px;box-shadow:var(--shadow);transition:.2s;position:relative}
+.card:active{transform:scale(.98)}
+.card-time{font-size:12px;color:var(--primary);font-weight:700;margin-bottom:4px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.card-desc{font-size:13px;color:var(--text-light);line-height:1.5}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:11px;padding:3px 8px;border-radius:10px;background:#f0ebff;color:var(--primary);font-weight:500}
+.tag.cost{background:#fff3e0;color:#e65100}
+.tag.link{background:#e3f2fd;color:#1565c0;cursor:pointer;text-decoration:none}
+.tag.link:hover{background:#bbdefb}
+/* bottom nav */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0 env(safe-area-inset-bottom,8px);box-shadow:0 -2px 10px rgba(0,0,0,.08);z-index:100}
+.nav-btn{display:flex;flex-direction:column;align-items:center;font-size:10px;color:var(--text-light);cursor:pointer;padding:4px 12px;border:none;background:none;transition:.2s}
+.nav-btn.active{color:var(--primary)}
+.nav-btn svg{width:22px;height:22px;margin-bottom:2px}
+/* panels */
+.panel{display:none;padding:16px}
+.panel.active{display:block}
+.panel h2{font-size:16px;margin-bottom:12px;color:var(--primary)}
+/* hotel list */
+.hotel-list-item{background:#fff;border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);position:relative}
+.hotel-list-item h3{font-size:14px;color:var(--primary);margin-bottom:6px}
+.hotel-list-item p{font-size:12px;color:#555;line-height:1.6}
+/* cost summary */
+.cost-table{width:100%;border-collapse:collapse;font-size:13px}
+.cost-table th{text-align:left;padding:8px;background:#f0ebff;color:var(--primary);border-radius:8px}
+.cost-table td{padding:8px;border-bottom:1px solid #f0f0f0}
+.cost-total{font-weight:700;font-size:15px;color:var(--primary);margin-top:12px;text-align:right}
+/* flight info */
+.flight-card{background:linear-gradient(135deg,#e3f2fd,#bbdefb);border-radius:var(--radius);padding:16px;margin-bottom:12px;position:relative}
+.flight-card h3{font-size:14px;margin-bottom:8px}
+.flight-card p{font-size:13px;line-height:1.6}
+/* hidden items for search */
+.hidden{display:none!important}
+/* no result */
+.no-result{text-align:center;padding:40px 20px;color:var(--text-light);font-size:14px}
+/* gear panel */
+.gear-section{margin-bottom:16px}
+.gear-section-title{font-size:14px;font-weight:700;color:var(--primary);padding:8px 0 4px;border-bottom:2px solid var(--accent);margin-bottom:8px}
+.gear-item{background:#fff;border-radius:12px;padding:10px 14px;margin-bottom:6px;box-shadow:var(--shadow);font-size:13px;line-height:1.5;display:flex;align-items:flex-start;gap:8px}
+.gear-item .gear-text{flex:1}
+.gear-item .gear-text strong{display:block;font-size:13px;color:#333}
+.gear-item .gear-text span{color:var(--text-light);font-size:12px}
+.gear-item.checked{background:#f0fff4}
+/* custom checkbox */
+.gear-checkbox{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:2px solid #ffb74d;border-radius:4px;flex-shrink:0;margin-top:1px;cursor:pointer;position:relative;background:#fff;transition:.15s}
+.gear-checkbox:checked{background:#e65100;border-color:#e65100}
+.gear-checkbox:checked::after{content:'';position:absolute;left:4px;top:1px;width:6px;height:10px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg)}
+/* edit button */
+.btn-edit{font-size:11px;padding:2px 6px;border-radius:8px;background:#fff3e0;color:#e65100;border:1px solid #ffb74d;cursor:pointer;float:right;margin-left:8px;flex-shrink:0}
+/* reset button */
+.btn-reset{font-size:11px;padding:3px 10px;border-radius:10px;background:#fff3e0;color:#e65100;border:1px solid #ffb74d;cursor:pointer;float:right}
+/* edit form inputs */
+.edit-input{width:100%;padding:6px 8px;border:1.5px solid #ffb74d;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit}
+.edit-input:focus{border-color:#e65100}
+.edit-textarea{width:100%;padding:6px 8px;border:1.5px solid #ffb74d;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit;resize:vertical;min-height:60px}
+.edit-select{width:100%;padding:6px 8px;border:1.5px solid #ffb74d;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit;background:#fff}
+.btn-save{background:#e65100;color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;margin-right:6px}
+.btn-cancel{background:#eee;color:#555;border:none;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer}
+/* add item button */
+.btn-add-item{width:100%;padding:8px;border:2px dashed #ffb74d;border-radius:12px;background:transparent;color:#e65100;font-size:13px;cursor:pointer;margin-top:4px;font-family:inherit}
+.btn-add-item:hover{background:#fff3e0}
+/* editable cost cell */
+.cost-cell-editable{cursor:pointer;border-bottom:1px dashed #ffb74d}
+.cost-cell-editable:hover{background:#fff3e0;border-radius:4px}
+/* panel header row */
+.panel-header{display:flex;align-items:center;margin-bottom:12px}
+.panel-header h2{font-size:16px;color:var(--primary);flex:1;margin-bottom:0}
+.gear-embed{width:100%;border:none;border-radius:var(--radius);min-height:600px;background:#fff}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🙏 四國遍路旅</h1>
+  <div class="subtitle">6天5晚 德島發心道場 ｜ 4/25 - 4/30</div>
+</div>
+
+<div id="main-panel" class="panel active">
+  <div class="day-tabs" id="dayTabs"></div>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="搜尋景點、餐廳、飯店...">
+  </div>
+  <div class="hotel-bar" id="hotelBar"></div>
+  <div class="timeline" id="timeline"></div>
+  <div class="no-result hidden" id="noResult">找不到符合的結果 😢</div>
+</div>
+
+<div id="hotel-panel" class="panel">
+  <div class="panel-header">
+    <h2>🏨 住宿總覽</h2>
+    <button class="btn-reset" onclick="resetTrip()">重置</button>
+  </div>
+  <div id="hotelList"></div>
+</div>
+
+<div id="cost-panel" class="panel">
+  <div class="panel-header">
+    <h2>💰 費用概覽</h2>
+    <button class="btn-reset" onclick="resetCost()">重置</button>
+  </div>
+  <div id="costContent"></div>
+</div>
+
+<div id="flight-panel" class="panel">
+  <div class="panel-header">
+    <h2>✈️ 航班資訊</h2>
+    <button class="btn-reset" onclick="resetFlights()">重置</button>
+  </div>
+  <div id="flightContent"></div>
+</div>
+
+<div id="gear-panel" class="panel">
+  <div class="panel-header">
+    <h2>🎒 裝備清單</h2>
+    <button class="btn-reset" onclick="resetGear()">重置</button>
+  </div>
+  <div id="gearContent"></div>
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-panel="main-panel">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+    行程
+  </button>
+  <button class="nav-btn" data-panel="hotel-panel">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+    住宿
+  </button>
+  <button class="nav-btn" data-panel="cost-panel">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+    費用
+  </button>
+  <button class="nav-btn" data-panel="flight-panel">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+    航班
+  </button>
+  <button class="nav-btn" data-panel="gear-panel">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.36C18 2.06 15.96 0 13.36 0c-1.31 0-2.48.52-3.36 1.36C9.12.52 7.95 0 6.64 0 4.04 0 2 2.06 2 4.64c0 .48.11.92.18 1.36H0v14h20V6zm-6.64-4c1.28 0 2.28 1 2.28 2.28 0 1.28-1 2.28-2.28 2.28H13V4.28C13 3 14 2 15.36 2zM6.64 2C7.92 2 9 3 9 4.28V6.56H7.64C6.36 6.56 5.36 5.56 5.36 4.28 5.36 3 6.36 2 6.64 2zM2 18V8h7v10H2zm9 0V8h7v10h-7z"/></svg>
+    裝備
+  </button>
+</nav>
+
+<script>
+
+// ── Default data ──────────────────────────────────────────────────────────────
+function buildMapsSearchUrl(locationName) {
+  return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(locationName);
+}
+function buildDriveUrl(origin, destination) {
+  return 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(origin) + '&destination=' + encodeURIComponent(destination) + '&travelmode=driving';
+}
+
+const DEFAULT_TRIP_DATA = [
+{day:1,date:"4月25日 週六",theme:"桃園→高松→板野",color:"#ff6d01",hotel:{name:"HOTEL AZ 徳島板野店",dates:"4/25",checkin:"21:00",checkout:"",cost:"6,050円 (現場付，地方稅另加)",address:"779-0102 徳島県板野郡板野町川端字新手崎27-1",booking:"樂天訂房",url:"https://maps.app.goo.gl/FcCqzuwGZiDjFdmJA"},items:[
+{time:"14:30",title:"CI178 桃園一航 → 高松機場",desc:"出發 14:30，抵達 18:05",type:"transport"},
+{time:"19:02",title:"高松機場大巴",desc:"搭乘機場大巴往高松駅 県民ホール・県立ミュージアム 行き，25分鐘",type:"transport",cost:"900円"},
+{time:"19:27",title:"栗林公園前站下車",desc:"走路10分鐘到JR栗林站",type:"transport"},
+{time:"20:10",title:"JR栗林站 → JR板野站",desc:"特急 Uzushio (うずしお) 號（往德島方向），45分鐘",type:"transport",cost:"2,440円"},
+{time:"21:00",title:"JR板野站",desc:"走路17分鐘到飯店",type:"transport"},
+{time:"",title:"HOTEL AZ 徳島板野店 Check-in",desc:"整體乘車約2小時（不含等車）",type:"hotel",url:"https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187551"}
+]},
+{day:2,date:"4月26日 週日",theme:"德島遍路 第4~7番",color:"#ff6d01",hotel:{name:"越久田屋（おくだや）",dates:"4/26",checkin:"",checkout:"",cost:"5,500円 素泊まり (現金)",address:"徳島県阿波市土成町宮川内字宮ノ下31-1",booking:"henrohouse.jp",url:"https://henrohouse.jp/ja/houses/74"},items:[
+{time:"09:24",title:"道の駅いたの（道路站 板野）",desc:"走路3分鐘，搭車17分，走路1小時12分",type:"spot"},
+{time:"09:42",title:"大日寺口",desc:"47、48鍛冶屋原線（經由羅漢・東原），36分鐘",type:"transport",cost:"340円"},
+{time:"",title:"🙏 第4番 大日寺",desc:"走路18分，1.2公里",type:"spot",url:buildMapsSearchUrl("大日寺 徳島")},
+{time:"",title:"🙏 第5番 地藏寺",desc:"走路25分鐘，1.6公里",type:"spot",url:buildMapsSearchUrl("地蔵寺 徳島")},
+{time:"",title:"🙏 第6番 安樂寺",desc:"走路1小時8分鐘，5.2公里",type:"spot",url:buildMapsSearchUrl("安楽寺 徳島")},
+{time:"",title:"🙏 第7番 十樂寺",desc:"走路18分鐘，1.8公里。今日合計約15.2公里",type:"spot",url:buildMapsSearchUrl("十楽寺 徳島")},
+{time:"",title:"越久田屋 Check-in",desc:"附近有大型超市，可免費接送購物。也有走路8分鐘的溫泉",type:"hotel",url:"https://henrohouse.jp/ja/houses/74"}
+]},
+{day:3,date:"4月27日 週一",theme:"德島遍路 第8~11番",color:"#ff6d01",hotel:{name:"旅館吉野",dates:"4/27",checkin:"",checkout:"",cost:"8,000円 一泊二食 (現金)",address:"776-0033 徳島県吉野川市鴨島町飯尾１４４４−１",booking:"11chikaku88@gmail.com (三個月前可)",url:"https://maps.app.goo.gl/sktXNJkFZ5LoNd2F7"},items:[
+{time:"",title:"越久田屋 出發",desc:"走路35分，2.1公里",type:"hotel"},
+{time:"",title:"🙏 第8番 熊谷寺",desc:"走路35分，2.4公里",type:"spot",url:buildMapsSearchUrl("熊谷寺 徳島")},
+{time:"",title:"🙏 第9番 法輪寺",desc:"9番前約有7-800公尺上坡，最後250公尺是階梯。走路1小時13分，4.8公里",type:"spot",url:buildMapsSearchUrl("法輪寺 徳島")},
+{time:"",title:"🙏 第10番 切幡寺",desc:"走路2小時20分，10.3公里",type:"spot",url:buildMapsSearchUrl("切幡寺 徳島")},
+{time:"",title:"🙏 第11番 藤井寺",desc:"表定8點-17點，時常提早。今日合計約17.5公里",type:"spot",url:buildMapsSearchUrl("藤井寺 徳島")},
+{time:"",title:"旅館吉野 Check-in",desc:"可提供300日圓午餐，可幫忙送行李",type:"hotel",url:"https://min88.jp/inn/141/"}
+]},
+{day:4,date:"4月28日 週二",theme:"燒山寺（遍路最難關）",color:"#ff6d01",hotel:{name:"すだち庵",dates:"4/28",checkin:"17:00前",checkout:"",cost:"7,900円 一泊二食",address:"徳島県名西郡神山町下分字鍋岩180",booking:"null1903@gmail.com (英文)",url:"https://maps.app.goo.gl/ngvQSm6g8WLkPjf86"},items:[
+{time:"",title:"旅館吉野 出發",desc:"走路5小時30分，13公里，爬升1160公尺，最後2公里最難，一般人平均要花六個小時",type:"hotel"},
+{time:"",title:"🙏 第12番 燒山寺",desc:"納經最後時間16:30。走路1小時30分，4.8公里",type:"spot",url:buildMapsSearchUrl("焼山寺 徳島")},
+{time:"",title:"すだち庵 Check-in",desc:"下午5點前抵達，可開車約10分鐘帶你去溫泉(600円)，隔日也可接送至山下公車站牌",type:"hotel",url:"https://www.sudachian.com/"}
+]},
+{day:5,date:"4月29日 週三",theme:"德島市區 第13~16番",color:"#ff6d01",hotel:{name:"鱗楼（Urokoro）",dates:"4/29",checkin:"",checkout:"",cost:"7,150円 朝食付 (朝食6:30~8:00)",address:"779-3124 徳島県徳島市国府町中268-1",booking:"urokorou.com",url:"https://maps.app.goo.gl/o9oZiAopm6beNQsw8"},items:[
+{time:"05:00",title:"すだち庵 起床出發",desc:"走公路，走路48分鐘，3.8公里",type:"hotel"},
+{time:"09:10",title:"神山高校前",desc:"62佐那河内線（さなごうちせん）到西地下車，搭車30分鐘",type:"transport",cost:"1,500円"},
+{time:"08:58",title:"白鷺台回轉場",desc:"走路10分鐘到白鷺台回転場（しらさぎ台回転場）",type:"transport"},
+{time:"11:15",title:"轉乘18一宮線",desc:"入田天之原（經由一之宮）到一之宮札所前",type:"transport"},
+{time:"",title:"🙏 第13番 大日寺",desc:"走路36分鐘，2.6公里",type:"spot",url:buildMapsSearchUrl("大日寺 徳島市")},
+{time:"",title:"🙏 第14番 常樂寺",desc:"走路11分鐘，800公尺",type:"spot",url:buildMapsSearchUrl("常楽寺 徳島")},
+{time:"",title:"🙏 第15番 國分寺",desc:"走路27分鐘，2公里",type:"spot",url:buildMapsSearchUrl("国分寺 徳島")},
+{time:"",title:"🙏 第16番 觀音寺",desc:"今日合計約9.3公里",type:"spot",url:buildMapsSearchUrl("観音寺 徳島市")},
+{time:"",title:"鱗楼（Urokoro）Check-in",desc:"",type:"hotel",url:"https://urokorou.com/stay/"}
+]},
+{day:6,date:"4月30日 週四",theme:"第17番 → 德島 → 高松 → 回家",color:"#ff6d01",hotel:null,items:[
+{time:"",title:"鱗楼 出發",desc:"走路40分鐘，2.9公里",type:"hotel"},
+{time:"",title:"🙏 第17番 井戶寺",desc:"走路約25分，1.8公里",type:"spot",url:buildMapsSearchUrl("井戸寺 徳島")},
+{time:"10:11",title:"府中（德島）",desc:"德島線普通阿南，4站",type:"transport"},
+{time:"10:49",title:"徳島駅前",desc:"步行約14分，1.0公里",type:"transport",cost:"320円"},
+{time:"",title:"德島城跡",desc:"順路參觀",type:"spot",url:buildMapsSearchUrl("徳島城跡")},
+{time:"14:24",title:"JR 特急 Uzushio 號",desc:"搭乘14:24或15:23發車的班次，前往高松",type:"transport",cost:"2,840円"},
+{time:"15:41",title:"栗林公園前",desc:"走路10分鐘到高松機場",type:"transport",cost:"900円"},
+{time:"19:05",title:"✈️ CI179 飛回家",desc:"高松機場→桃園一航，20:55抵達",type:"transport"}
+]}
+];
+
+const DEFAULT_FLIGHTS = [
+{dir:"去程",route:"桃園一航 → TAK 高松機場",airline:"華航",code:"CI178",depart:"14:30",arrive:"18:05",seat:""},
+{dir:"回程",route:"TAK 高松機場 → 桃園一航",airline:"華航",code:"CI179",depart:"19:05",arrive:"20:55",seat:""}
+];
+
+const DEFAULT_GEAR_SECTIONS = [
+{title:"⛩️ 遍路必備法具",items:[
+{text:"金剛杖 (Kongōzue)",note:"象徵與弘法大師同行，也是登山時的重要支撐"},
+{text:"白衣 (Hakui)",note:"穿在最外層的白色背心或外套，代表朝聖者身份"},
+{text:"菅笠 (Sugegasa)",note:"傳統斗笠，遮陽擋雨效果極佳（進入寺院參拜不需脫帽）"},
+{text:"輪袈裟 (Wagesa)",note:"參拜時圍在脖子上的法衣"},
+{text:"納經帳 (Nōkyōchō)",note:"收集各番寺院朱印的手冊"},
+{text:"納札 (Osamefuda)",note:"寫上名字與心願，在每間寺廟的大師堂與本堂投入"},
+{text:"頭陀袋 (Zudabukuro)",note:"專門裝放納經帳、線香、蠟燭、硬幣的斜背包、太陽眼鏡"},
+{text:"線香、蠟燭與打火機",note:"參拜時使用"}
+]},
+{title:"👕 衣物穿著（4/25~4/30 氣候：10°C - 23°C）",items:[
+{text:"底層：排汗速乾衣",note:"建議兩套替換，一穿一備。RIDGE"},
+{text:"中層：薄刷毛或防風輕便外套",note:"早晚及山區微涼時穿著"},
+{text:"外層：防水機能外套（或輕便雨衣）",note:""},
+{text:"下身：登山快乾褲",note:""},
+{text:"健行鞋",note:"建議已磨合過的防滑運動鞋"},
+{text:"鞋子防水套（短板）",note:""},
+{text:"五指襪",note:"強烈建議！有效減少腳趾摩擦，防止長水泡"},
+{text:"配件：遮陽帽、袖套（防曬用）、手套",note:""}
+]},
+{title:"🎒 個人裝備與電子用品",items:[
+{text:"登山杖",note:"HELINOX PASSPORT 二手3800"},
+{text:"輕便鞋",note:""},
+{text:"背包：20L-30L 登山背包（含雨罩）",note:"yamatomichi mini M"},
+{text:"攻頂背包",note:""},
+{text:"雨具：兩截式雨衣或大斗篷式雨衣",note:"需能覆蓋背包"},
+{text:"鞋套",note:""},
+{text:"水壺/水袋",note:"隨時補水。snowpeak 鈦"},
+{text:"熱水杯",note:""},
+{text:"現金（日幣）",note:"許多鄉下民宿或納經所僅收現金，需準備大量5圓與10圓硬幣供參拜使用"},
+{text:"行動電源等",note:"導航非常耗電"},
+{text:"離線地圖",note:"建議下載 Google Maps 離線地圖或購買《四國遍路遊覽地圖》"},
+{text:"頭燈",note:""},
+{text:"保暖毯",note:""},
+{text:"保暖毯",note:""}
+]},
+{title:"💊 藥品與個人護理",items:[
+{text:"防水泡用品",note:"凡士林（塗在腳趾減少摩擦）、人工皮、OK 繃"},
+{text:"痠痛貼布/噴霧",note:"連走六天非常需要"},
+{text:"防曬乳與護唇膏",note:"戶外紫外線強"},
+{text:"常備藥",note:"感冒藥、腸胃藥、止痛藥、Correct X紅十字凝膠（抗菌消炎）"},
+{text:"按摩儀",note:"達摩經絡按摩儀、刮痧板、按摩油"},
+{text:"保養用品",note:"洗髮皂、洗臉乳、乳液、潤色隔離霜"},
+{text:"護髮油",note:""},
+{text:"咖啡包、口罩",note:""},
+{text:"自拍棒",note:""},
+{text:"DJB sim卡、skype點數",note:""},
+{text:"日本原生 eSIM",note:"tabiesim.jp"}
+]}
+];
+
+// Default checked states matching original file
+const DEFAULT_GEAR_CHECKS = {
+  "2-3":true,"2-5":true,
+  "3-3":true,"3-5":true,
+  "1-1":true,"1-2":true,"1-3":true,"1-4":true,"1-5":true,"1-6":true,"1-7":true,
+  "3-13":true,"3-14":true
+};
+// Mapping from original array indices (0-based section, 0-based item) to DEFAULT_GEAR_CHECKS keys
+// Section 0 (遍路法具): all unchecked
+// Section 1 (衣物): all unchecked
+// Section 2 (裝備): item 3=攻頂背包(checked), item 5=鞋套(checked), item 12=保暖毯(checked), item 13=保暖毯(checked)
+// Section 3 (藥品): item 1=痠痛(checked), item 2=防曬(checked), item 3=常備藥(checked), item 5=保養(checked), item 7=咖啡包(checked)
+const DEFAULT_GEAR_CHECKS_CORRECT = {
+  "2-3":true,"2-5":true,"2-12":true,"2-13":true,
+  "3-1":true,"3-2":true,"3-3":true,"3-5":true,"3-7":true
+};
+
+const DEFAULT_COST_DATA = {
+  hotel:[
+    {name:"HOTEL AZ 徳島板野店 (1晚)",cost:"6,050円"},
+    {name:"越久田屋（おくだや）(1晚,素泊)",cost:"5,500円"},
+    {name:"旅館吉野 (1晚,一泊二食)",cost:"8,000円"},
+    {name:"すだち庵 (1晚,一泊二食)",cost:"7,900円"},
+    {name:"鱗楼（Urokoro）(1晚,朝食付)",cost:"7,150円"}
+  ],
+  hotelTotal:"約 34,600円",
+  transport:[
+    {name:"機場大巴 高松機場→栗林公園前",cost:"900円"},
+    {name:"JR 特急 Uzushio 栗林→板野",cost:"2,440円"},
+    {name:"德島巴士 大日寺口",cost:"340円"},
+    {name:"德島巴士 神山高校前",cost:"1,500円"},
+    {name:"JR 德島→高松 特急 Uzushio",cost:"2,840円"},
+    {name:"機場大巴 栗林公園前→高松機場",cost:"900円"}
+  ],
+  flight:[
+    {name:"華航 CI178/CI179 來回",cost:"NT.13,369"}
+  ]
+};
+
+// ── localStorage helpers ──────────────────────────────────────────────────────
+function saveTrip() { localStorage.setItem('tripData', JSON.stringify(TRIP_DATA)); }
+function saveFlights() { localStorage.setItem('flightsData', JSON.stringify(FLIGHTS)); }
+function saveGear() { localStorage.setItem('gearData', JSON.stringify(GEAR_SECTIONS)); }
+function saveGearChecks() { localStorage.setItem('gearChecks', JSON.stringify(gearChecks)); }
+function saveCost() { localStorage.setItem('costData', JSON.stringify(costData)); }
+
+function resetTrip() {
+  if (!confirm('確定要重置行程資料嗎？')) return;
+  localStorage.removeItem('tripData');
+  TRIP_DATA.length = 0;
+  JSON.parse(JSON.stringify(DEFAULT_TRIP_DATA)).forEach(d => TRIP_DATA.push(d));
+  renderTimeline(currentDay);
+  renderHotels();
+}
+function resetFlights() {
+  if (!confirm('確定要重置航班資料嗎？')) return;
+  localStorage.removeItem('flightsData');
+  FLIGHTS.length = 0;
+  JSON.parse(JSON.stringify(DEFAULT_FLIGHTS)).forEach(f => FLIGHTS.push(f));
+  renderFlights();
+}
+function resetGear() {
+  if (!confirm('確定要重置裝備清單嗎？')) return;
+  localStorage.removeItem('gearData');
+  localStorage.removeItem('gearChecks');
+  GEAR_SECTIONS.length = 0;
+  JSON.parse(JSON.stringify(DEFAULT_GEAR_SECTIONS)).forEach(s => GEAR_SECTIONS.push(s));
+  for (const k in gearChecks) delete gearChecks[k];
+  Object.assign(gearChecks, JSON.parse(JSON.stringify(DEFAULT_GEAR_CHECKS_CORRECT)));
+  renderGear();
+}
+function resetCost() {
+  if (!confirm('確定要重置費用資料嗎？')) return;
+  localStorage.removeItem('costData');
+  Object.assign(costData, JSON.parse(JSON.stringify(DEFAULT_COST_DATA)));
+  renderCosts();
+}
+
+// ── Load from localStorage or defaults ───────────────────────────────────────
+var TRIP_DATA = (function(){
+  try { var s = localStorage.getItem('tripData'); if(s) return JSON.parse(s); } catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_TRIP_DATA));
+})();
+
+var FLIGHTS = (function(){
+  try { var s = localStorage.getItem('flightsData'); if(s) return JSON.parse(s); } catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_FLIGHTS));
+})();
+
+var GEAR_SECTIONS = (function(){
+  try { var s = localStorage.getItem('gearData'); if(s) return JSON.parse(s); } catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_GEAR_SECTIONS));
+})();
+
+var gearChecks = (function(){
+  try { var s = localStorage.getItem('gearChecks'); if(s) return JSON.parse(s); } catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_GEAR_CHECKS_CORRECT));
+})();
+
+var costData = (function(){
+  try { var s = localStorage.getItem('costData'); if(s) return JSON.parse(s); } catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_COST_DATA));
+})();
+
+// ── Day tabs ──────────────────────────────────────────────────────────────────
+const tabsEl = document.getElementById('dayTabs');
+TRIP_DATA.forEach((d,i)=>{
+  const btn = document.createElement('div');
+  btn.className = 'day-tab'+(i===0?' active':'');
+  btn.innerHTML = 'Day '+d.day+'<span class="tab-date">'+d.date.split(' ')[0]+'</span>';
+  btn.dataset.day = d.day;
+  btn.onclick = ()=> selectDay(d.day);
+  tabsEl.appendChild(btn);
+});
+
+const allTab = document.createElement('div');
+allTab.className = 'day-tab';
+allTab.innerHTML = '全部<span class="tab-date">6天</span>';
+allTab.dataset.day = 0;
+allTab.onclick = ()=> selectDay(0);
+tabsEl.prepend(allTab);
+
+let currentDay = 1;
+
+function selectDay(day){
+  currentDay = day;
+  document.querySelectorAll('.day-tab').forEach(t=> t.classList.toggle('active', parseInt(t.dataset.day)===day));
+  document.getElementById('searchInput').value = '';
+  renderTimeline(day);
+}
+
+// ── Timeline rendering ────────────────────────────────────────────────────────
+function typeIcon(t){
+  return {spot:'📍',meal:'🍽️',transport:'🚃',hotel:'🏨',drive:'🚗'}[t]||'📌';
+}
+function matchFilter(d, f){
+  return d.theme.toLowerCase().includes(f) || d.items.some(i=>itemMatch(i,f));
+}
+function itemMatch(item, f){
+  return (item.title+(item.desc||'')).toLowerCase().includes(f);
+}
+
+function renderTimeline(day, filter){
+  filter = filter || '';
+  const tl = document.getElementById('timeline');
+  const hb = document.getElementById('hotelBar');
+  const nr = document.getElementById('noResult');
+  tl.innerHTML = '';
+  hb.classList.remove('show');
+  nr.classList.add('hidden');
+
+  const days = day===0 ? TRIP_DATA : TRIP_DATA.filter(d=>d.day===day);
+  let hasItems = false;
+
+  days.forEach(d=>{
+    if(day!==0 && d.hotel){
+      hb.innerHTML = '<div class="hotel-name">🏨 '+d.hotel.name+'</div>'
+        +'<div class="hotel-detail">'+(d.hotel.dates||'')+' ｜ 入住 '+(d.hotel.checkin||'-')+' 退房 '+(d.hotel.checkout||'-')+'</div>'
+        +(d.hotel.cost?'<div class="hotel-detail">💰 '+d.hotel.cost+'</div>':'')
+        +(d.hotel.url?'<a href="'+d.hotel.url+'" target="_blank">📍 Google Maps</a>':'');
+      hb.classList.add('show');
+    }
+
+    if(day===0){
+      const header = document.createElement('div');
+      header.style.cssText = 'font-weight:700;font-size:15px;padding:12px 0 4px;color:'+d.color+';border-bottom:2px solid '+d.color+';margin-bottom:8px';
+      header.textContent = 'Day '+d.day+' — '+d.date+' '+d.theme;
+      if(!filter || matchFilter(d, filter)) tl.appendChild(header);
+    }
+
+    d.items.forEach((item, itemIdx)=>{
+      if(filter && !itemMatch(item, filter) && !d.theme.toLowerCase().includes(filter)) return;
+      hasItems = true;
+      const dayIdx = TRIP_DATA.indexOf(d);
+      const div = document.createElement('div');
+      div.className = 'timeline-item '+item.type;
+      div.dataset.dayIdx = dayIdx;
+      div.dataset.itemIdx = itemIdx;
+
+      let tags = '';
+      if(item.cost) tags += '<span class="tag cost">💰 '+item.cost+'</span>';
+      if(item.url) tags += '<a class="tag link" href="'+item.url+'" target="_blank">📍 地圖/連結</a>';
+      if(item.driveUrl) tags += '<a class="tag drive-link" href="'+item.driveUrl+'" target="_blank">🚗 導航路線</a>';
+
+      div.innerHTML = '<div class="timeline-dot"></div><div class="card" id="card-'+dayIdx+'-'+itemIdx+'">'
+        +'<button class="btn-edit" onclick="editTimelineItem('+dayIdx+','+itemIdx+')">✏️</button>'
+        +(item.time?'<div class="card-time">'+item.time+'</div>':'')
+        +'<div class="card-title">'+typeIcon(item.type)+' '+escHtml(item.title)+'</div>'
+        +(item.desc?'<div class="card-desc">'+escHtml(item.desc)+'</div>':'')
+        +(tags?'<div class="card-tags">'+tags+'</div>':'')
+        +'</div>';
+      tl.appendChild(div);
+    });
+  });
+
+  if(!hasItems) nr.classList.remove('hidden');
+}
+
+function editTimelineItem(dayIdx, itemIdx) {
+  const item = TRIP_DATA[dayIdx].items[itemIdx];
+  const cardEl = document.getElementById('card-'+dayIdx+'-'+itemIdx);
+  const orig = cardEl.innerHTML;
+  cardEl.innerHTML = '<form onsubmit="saveTimelineItem(event,'+dayIdx+','+itemIdx+')" style="padding:4px 0">'
+    +'<input class="edit-input" name="time" placeholder="時間 (e.g. 09:00)" value="'+escAttr(item.time||'')+'">'
+    +'<input class="edit-input" name="title" placeholder="標題" value="'+escAttr(item.title||'')+'" required>'
+    +'<textarea class="edit-textarea" name="desc" placeholder="說明">'+escHtml(item.desc||'')+'</textarea>'
+    +'<input class="edit-input" name="cost" placeholder="費用 (e.g. 900円)" value="'+escAttr(item.cost||'')+'">'
+    +'<select class="edit-select" name="type">'
+    +['spot','meal','transport','hotel','drive'].map(t=>'<option value="'+t+'"'+(item.type===t?' selected':'')+'>'+t+'</option>').join('')
+    +'</select>'
+    +'<button type="submit" class="btn-save">儲存</button>'
+    +'<button type="button" class="btn-cancel" onclick="cancelTimelineEdit('+dayIdx+','+itemIdx+',this)">取消</button>'
+    +'</form>';
+  cardEl._origHTML = orig;
+}
+
+function cancelTimelineEdit(dayIdx, itemIdx, btn) {
+  const cardEl = document.getElementById('card-'+dayIdx+'-'+itemIdx);
+  cardEl.innerHTML = cardEl._origHTML;
+}
+
+function saveTimelineItem(e, dayIdx, itemIdx) {
+  e.preventDefault();
+  const form = e.target;
+  const item = TRIP_DATA[dayIdx].items[itemIdx];
+  item.time = form.time.value.trim();
+  item.title = form.title.value.trim();
+  item.desc = form.desc.value.trim();
+  item.cost = form.cost.value.trim() || undefined;
+  item.type = form.type.value;
+  saveTrip();
+  renderTimeline(currentDay, document.getElementById('searchInput').value.trim().toLowerCase());
+}
+
+// Search
+document.getElementById('searchInput').addEventListener('input', e=>{
+  const v = e.target.value.trim().toLowerCase();
+  renderTimeline(currentDay, v);
+});
+
+// Bottom nav
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById(btn.dataset.panel).classList.add('active');
+  };
+});
+
+// ── Hotels rendering ──────────────────────────────────────────────────────────
+function renderHotels(){
+  const el = document.getElementById('hotelList');
+  el.innerHTML = '';
+  const seen = new Set();
+  TRIP_DATA.filter(d=>d.hotel).forEach((d, tripIdx)=>{
+    const h = d.hotel;
+    if(seen.has(h.name)) return;
+    seen.add(h.name);
+    const dayIdx = TRIP_DATA.indexOf(d);
+    const div = document.createElement('div');
+    div.className = 'hotel-list-item';
+    div.id = 'hotel-card-'+dayIdx;
+    div.innerHTML = renderHotelCardHTML(dayIdx, h);
+    el.appendChild(div);
+  });
+}
+
+function renderHotelCardHTML(dayIdx, h) {
+  return '<button class="btn-edit" onclick="editHotel('+dayIdx+')">✏️</button>'
+    +'<h3>'+escHtml(h.name)+'</h3>'
+    +'<p>📅 '+escHtml(h.dates||'')+'</p>'
+    +'<p>⏰ 入住 '+escHtml(h.checkin||'-')+' ｜ 退房 '+escHtml(h.checkout||'-')+'</p>'
+    +'<p>💰 '+escHtml(h.cost||'-')+'</p>'
+    +'<p>📍 '+escHtml(h.address||'-')+'</p>'
+    +'<p>📝 '+escHtml(h.booking||'-')+'</p>'
+    +(h.url?'<p><a href="'+h.url+'" target="_blank" style="color:#7c5cbf">🗺️ Google Maps</a></p>':'');
+}
+
+function editHotel(dayIdx) {
+  const h = TRIP_DATA[dayIdx].hotel;
+  const card = document.getElementById('hotel-card-'+dayIdx);
+  const orig = card.innerHTML;
+  card.innerHTML = '<form onsubmit="saveHotel(event,'+dayIdx+')" style="padding:4px 0">'
+    +'<input class="edit-input" name="name" placeholder="飯店名稱" value="'+escAttr(h.name||'')+'" required>'
+    +'<input class="edit-input" name="dates" placeholder="日期 (e.g. 4/25)" value="'+escAttr(h.dates||'')+'">'
+    +'<input class="edit-input" name="checkin" placeholder="入住時間" value="'+escAttr(h.checkin||'')+'">'
+    +'<input class="edit-input" name="checkout" placeholder="退房時間" value="'+escAttr(h.checkout||'')+'">'
+    +'<input class="edit-input" name="cost" placeholder="費用" value="'+escAttr(h.cost||'')+'">'
+    +'<input class="edit-input" name="address" placeholder="地址" value="'+escAttr(h.address||'')+'">'
+    +'<input class="edit-input" name="booking" placeholder="訂房方式" value="'+escAttr(h.booking||'')+'">'
+    +'<input class="edit-input" name="url" placeholder="地圖連結" value="'+escAttr(h.url||'')+'">'
+    +'<button type="submit" class="btn-save">儲存</button>'
+    +'<button type="button" class="btn-cancel" onclick="cancelHotelEdit('+dayIdx+',this)">取消</button>'
+    +'</form>';
+  card._origHTML = orig;
+}
+
+function cancelHotelEdit(dayIdx, btn) {
+  const card = document.getElementById('hotel-card-'+dayIdx);
+  card.innerHTML = card._origHTML;
+}
+
+function saveHotel(e, dayIdx) {
+  e.preventDefault();
+  const form = e.target;
+  const h = TRIP_DATA[dayIdx].hotel;
+  h.name = form.name.value.trim();
+  h.dates = form.dates.value.trim();
+  h.checkin = form.checkin.value.trim();
+  h.checkout = form.checkout.value.trim();
+  h.cost = form.cost.value.trim();
+  h.address = form.address.value.trim();
+  h.booking = form.booking.value.trim();
+  h.url = form.url.value.trim();
+  saveTrip();
+  renderHotels();
+}
+
+// ── Costs rendering ───────────────────────────────────────────────────────────
+function renderCosts(){
+  const el = document.getElementById('costContent');
+  el.innerHTML = '';
+
+  // Hotel costs
+  let html = '<h3 style="font-size:14px;margin-bottom:8px">🏨 住宿費用</h3>'
+    +'<table class="cost-table"><tr><th>民宿/飯店</th><th>費用</th></tr>';
+  costData.hotel.forEach((h, i)=>{
+    html += '<tr><td>'+escHtml(h.name)+'</td>'
+      +'<td><span class="cost-cell-editable" data-section="hotel" data-idx="'+i+'" onclick="editCostCell(this,\'hotel\','+i+')">'+escHtml(h.cost)+'</span></td></tr>';
+  });
+  html += '</table><div class="cost-total">住宿合計：'+escHtml(costData.hotelTotal)+'</div>';
+
+  // Transport costs
+  html += '<h3 style="font-size:14px;margin:16px 0 8px">🚃 交通費用 (每人)</h3>'
+    +'<table class="cost-table"><tr><th>項目</th><th>費用</th></tr>';
+  costData.transport.forEach((t, i)=>{
+    html += '<tr><td>'+escHtml(t.name)+'</td>'
+      +'<td><span class="cost-cell-editable" data-section="transport" data-idx="'+i+'" onclick="editCostCell(this,\'transport\','+i+')">'+escHtml(t.cost)+'</span></td></tr>';
+  });
+  html += '</table>';
+
+  // Flight costs
+  html += '<h3 style="font-size:14px;margin:16px 0 8px">✈️ 機票 (NT)</h3>'
+    +'<table class="cost-table"><tr><th>項目</th><th>費用</th></tr>';
+  costData.flight.forEach((f, i)=>{
+    html += '<tr><td>'+escHtml(f.name)+'</td>'
+      +'<td><span class="cost-cell-editable" data-section="flight" data-idx="'+i+'" onclick="editCostCell(this,\'flight\','+i+')">'+escHtml(f.cost)+'</span></td></tr>';
+  });
+  html += '</table>';
+
+  el.innerHTML = html;
+}
+
+function editCostCell(span, section, idx) {
+  const orig = span.textContent;
+  const input = document.createElement('input');
+  input.className = 'edit-input';
+  input.value = orig;
+  input.style.marginBottom = '0';
+  input.style.width = '120px';
+  span.replaceWith(input);
+  input.focus();
+  input.select();
+
+  function commit() {
+    const val = input.value.trim() || orig;
+    costData[section][idx].cost = val;
+    saveCost();
+    renderCosts();
+  }
+  input.addEventListener('blur', commit);
+  input.addEventListener('keydown', e=>{
+    if(e.key==='Enter') { e.preventDefault(); commit(); }
+    if(e.key==='Escape') { renderCosts(); }
+  });
+}
+
+// ── Flights rendering ─────────────────────────────────────────────────────────
+function renderFlights(){
+  const el = document.getElementById('flightContent');
+  el.innerHTML = '';
+  FLIGHTS.forEach((f, i)=>{
+    const div = document.createElement('div');
+    div.className = 'flight-card';
+    div.id = 'flight-card-'+i;
+    div.innerHTML = renderFlightCardHTML(i, f);
+    el.appendChild(div);
+  });
+}
+
+function renderFlightCardHTML(i, f) {
+  return '<button class="btn-edit" onclick="editFlight('+i+')">✏️</button>'
+    +'<h3>✈️ '+escHtml(f.dir)+'：'+escHtml(f.airline)+'</h3>'
+    +'<p>📍 '+escHtml(f.route)+'</p>'
+    +'<p>🔢 航班編號：'+escHtml(f.code)+'</p>'
+    +'<p>🕐 出發：'+escHtml(f.depart)+' → 到達：'+escHtml(f.arrive)+'</p>'
+    +(f.seat?'<p>💺 座位：'+escHtml(f.seat)+'</p>':'');
+}
+
+function editFlight(i) {
+  const f = FLIGHTS[i];
+  const card = document.getElementById('flight-card-'+i);
+  const orig = card.innerHTML;
+  card.innerHTML = '<form onsubmit="saveFlight(event,'+i+')" style="padding:4px 0">'
+    +'<input class="edit-input" name="dir" placeholder="方向 (去程/回程)" value="'+escAttr(f.dir||'')+'">'
+    +'<input class="edit-input" name="airline" placeholder="航空公司" value="'+escAttr(f.airline||'')+'">'
+    +'<input class="edit-input" name="route" placeholder="航線" value="'+escAttr(f.route||'')+'">'
+    +'<input class="edit-input" name="code" placeholder="航班編號" value="'+escAttr(f.code||'')+'">'
+    +'<input class="edit-input" name="depart" placeholder="出發時間" value="'+escAttr(f.depart||'')+'">'
+    +'<input class="edit-input" name="arrive" placeholder="抵達時間" value="'+escAttr(f.arrive||'')+'">'
+    +'<input class="edit-input" name="seat" placeholder="座位" value="'+escAttr(f.seat||'')+'">'
+    +'<button type="submit" class="btn-save">儲存</button>'
+    +'<button type="button" class="btn-cancel" onclick="cancelFlightEdit('+i+',this)">取消</button>'
+    +'</form>';
+  card._origHTML = orig;
+}
+
+function cancelFlightEdit(i, btn) {
+  const card = document.getElementById('flight-card-'+i);
+  card.innerHTML = card._origHTML;
+}
+
+function saveFlight(e, i) {
+  e.preventDefault();
+  const form = e.target;
+  const f = FLIGHTS[i];
+  f.dir = form.dir.value.trim();
+  f.airline = form.airline.value.trim();
+  f.route = form.route.value.trim();
+  f.code = form.code.value.trim();
+  f.depart = form.depart.value.trim();
+  f.arrive = form.arrive.value.trim();
+  f.seat = form.seat.value.trim();
+  saveFlights();
+  renderFlights();
+}
+
+// ── Gear rendering ────────────────────────────────────────────────────────────
+function renderGear(){
+  const el = document.getElementById('gearContent');
+  el.innerHTML = '';
+  GEAR_SECTIONS.forEach((sec, sIdx)=>{
+    const secDiv = document.createElement('div');
+    secDiv.className = 'gear-section';
+    secDiv.id = 'gear-section-'+sIdx;
+
+    let html = '<div class="gear-section-title">'+escHtml(sec.title)+'</div>';
+    sec.items.forEach((item, iIdx)=>{
+      const key = sIdx+'-'+iIdx;
+      const checked = !!gearChecks[key];
+      html += '<div class="gear-item'+(checked?' checked':'')+'" id="gear-item-'+sIdx+'-'+iIdx+'">'
+        +'<input type="checkbox" class="gear-checkbox" '+(checked?'checked':'')+' onchange="toggleGearCheck('+sIdx+','+iIdx+',this)">'
+        +'<div class="gear-text"><strong>'+escHtml(item.text)+'</strong>'+(item.note?'<span>'+escHtml(item.note)+'</span>':'')+'</div>'
+        +'<button class="btn-edit" onclick="editGearItem('+sIdx+','+iIdx+')">✏️</button>'
+        +'</div>';
+    });
+    html += '<button class="btn-add-item" onclick="addGearItem('+sIdx+')">+ 新增項目</button>';
+    secDiv.innerHTML = html;
+    el.appendChild(secDiv);
+  });
+}
+
+function toggleGearCheck(sIdx, iIdx, cb) {
+  const key = sIdx+'-'+iIdx;
+  if(cb.checked) {
+    gearChecks[key] = true;
+  } else {
+    delete gearChecks[key];
+  }
+  saveGearChecks();
+  const itemEl = document.getElementById('gear-item-'+sIdx+'-'+iIdx);
+  if(itemEl) itemEl.classList.toggle('checked', cb.checked);
+}
+
+function editGearItem(sIdx, iIdx) {
+  const item = GEAR_SECTIONS[sIdx].items[iIdx];
+  const itemEl = document.getElementById('gear-item-'+sIdx+'-'+iIdx);
+  const orig = itemEl.innerHTML;
+  itemEl.innerHTML = '<form onsubmit="saveGearItem(event,'+sIdx+','+iIdx+')" style="flex:1;padding:2px 0">'
+    +'<input class="edit-input" name="text" placeholder="項目名稱" value="'+escAttr(item.text||'')+'" required>'
+    +'<input class="edit-input" name="note" placeholder="備註" value="'+escAttr(item.note||'')+'">'
+    +'<button type="submit" class="btn-save">儲存</button>'
+    +'<button type="button" class="btn-cancel" onclick="cancelGearEdit('+sIdx+','+iIdx+',this)">取消</button>'
+    +'</form>';
+  itemEl._origHTML = orig;
+}
+
+function cancelGearEdit(sIdx, iIdx, btn) {
+  const itemEl = document.getElementById('gear-item-'+sIdx+'-'+iIdx);
+  itemEl.innerHTML = itemEl._origHTML;
+}
+
+function saveGearItem(e, sIdx, iIdx) {
+  e.preventDefault();
+  const form = e.target;
+  const item = GEAR_SECTIONS[sIdx].items[iIdx];
+  item.text = form.text.value.trim();
+  item.note = form.note.value.trim();
+  saveGear();
+  renderGear();
+}
+
+function addGearItem(sIdx) {
+  GEAR_SECTIONS[sIdx].items.push({text:'新項目',note:''});
+  saveGear();
+  renderGear();
+  // Auto-open edit for the new item
+  const newIdx = GEAR_SECTIONS[sIdx].items.length - 1;
+  editGearItem(sIdx, newIdx);
+}
+
+// ── Utility ───────────────────────────────────────────────────────────────────
+function escHtml(s) {
+  if(!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  if(!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderTimeline(1);
+renderHotels();
+renderCosts();
+renderFlights();
+renderGear();
+</script>
+</body>
+</html>
