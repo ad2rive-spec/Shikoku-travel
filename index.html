@@ -111,6 +111,10 @@ body{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(-
 /* editable cost cell */
 .cost-cell-editable{cursor:pointer;border-bottom:1px dashed #ffb74d}
 .cost-cell-editable:hover{background:#fff3e0;border-radius:4px}
+/* add timeline button */
+.timeline-item-add{padding:4px 0 8px}
+.btn-add-timeline{width:100%;padding:10px;border:2px dashed #ffb74d;border-radius:14px;background:transparent;color:#e65100;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.btn-add-timeline:hover{background:#fff3e0;border-color:#e65100}
 /* panel header row */
 .panel-header{display:flex;align-items:center;margin-bottom:12px}
 .panel-header h2{font-size:16px;color:var(--primary);flex:1;margin-bottom:0}
@@ -503,6 +507,15 @@ function renderTimeline(day, filter){
         +'</div>';
       tl.appendChild(div);
     });
+
+    // Add new item button (only in single-day view, no filter)
+    if(day!==0 && !filter){
+      const dayIdx = TRIP_DATA.indexOf(d);
+      const addBtn = document.createElement('div');
+      addBtn.className = 'timeline-item-add';
+      addBtn.innerHTML = '<button class="btn-add-timeline" onclick="showAddItemForm('+dayIdx+')">＋ 新增行程</button>';
+      tl.appendChild(addBtn);
+    }
   });
 
   if(!hasItems) nr.classList.remove('hidden');
@@ -540,8 +553,77 @@ function saveTimelineItem(e, dayIdx, itemIdx) {
   item.desc = form.desc.value.trim();
   item.cost = form.cost.value.trim() || undefined;
   item.type = form.type.value;
+  sortDayItems(dayIdx);
   saveTrip();
   renderTimeline(currentDay, document.getElementById('searchInput').value.trim().toLowerCase());
+}
+
+// ── Add new timeline item ─────────────────────────────────────────────────────
+function showAddItemForm(dayIdx) {
+  // Remove any existing add-form
+  const existing = document.getElementById('add-item-form-wrap');
+  if(existing) existing.remove();
+
+  const wrap = document.createElement('div');
+  wrap.id = 'add-item-form-wrap';
+  wrap.style.cssText = 'padding:0 16px 12px';
+  wrap.innerHTML = '<div class="card" style="border:2px dashed #ffb74d;background:#fffdf8">'
+    +'<div style="font-weight:700;font-size:13px;color:#e65100;margin-bottom:10px">＋ 新增行程項目</div>'
+    +'<form onsubmit="addTimelineItem(event,'+dayIdx+')">'
+    +'<input class="edit-input" name="time" placeholder="時間 (e.g. 09:00，留空排最後)">'
+    +'<input class="edit-input" name="title" placeholder="標題 *" required>'
+    +'<textarea class="edit-textarea" name="desc" placeholder="說明（選填）"></textarea>'
+    +'<input class="edit-input" name="cost" placeholder="費用 (e.g. 900円，選填)">'
+    +'<input class="edit-input" name="url" placeholder="地圖連結（選填）">'
+    +'<select class="edit-select" name="type">'
+    +'<option value="spot">📍 景點 (spot)</option>'
+    +'<option value="meal">🍽️ 餐飲 (meal)</option>'
+    +'<option value="transport">🚃 交通 (transport)</option>'
+    +'<option value="hotel">🏨 住宿 (hotel)</option>'
+    +'<option value="drive">🚗 開車 (drive)</option>'
+    +'</select>'
+    +'<button type="submit" class="btn-save">新增</button>'
+    +'<button type="button" class="btn-cancel" onclick="document.getElementById(\'add-item-form-wrap\').remove()">取消</button>'
+    +'</form>'
+    +'</div>';
+
+  // Insert before the add button row
+  const addBtnRow = document.querySelector('.timeline-item-add');
+  if(addBtnRow) {
+    addBtnRow.parentNode.insertBefore(wrap, addBtnRow);
+  } else {
+    document.getElementById('timeline').appendChild(wrap);
+  }
+  wrap.querySelector('input[name="time"]').focus();
+}
+
+function addTimelineItem(e, dayIdx) {
+  e.preventDefault();
+  const form = e.target;
+  const newItem = {
+    time: form.time.value.trim(),
+    title: form.title.value.trim(),
+    desc: form.desc.value.trim(),
+    type: form.type.value
+  };
+  if(form.cost.value.trim()) newItem.cost = form.cost.value.trim();
+  if(form.url.value.trim()) newItem.url = form.url.value.trim();
+
+  TRIP_DATA[dayIdx].items.push(newItem);
+  sortDayItems(dayIdx);
+  saveTrip();
+  renderTimeline(currentDay, '');
+}
+
+// Sort items by time: HH:MM first, then items with no time at the end
+function timeToMinutes(t) {
+  if(!t || !t.match(/^\d{1,2}:\d{2}$/)) return Infinity;
+  const parts = t.split(':');
+  return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+}
+
+function sortDayItems(dayIdx) {
+  TRIP_DATA[dayIdx].items.sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time));
 }
 
 // Search
