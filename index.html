@@ -537,6 +537,8 @@ function editTimelineItem(dayIdx, itemIdx) {
     +'<button type="button" class="btn-cancel" onclick="cancelTimelineEdit('+dayIdx+','+itemIdx+',this)">取消</button>'
     +'</form>';
   cardEl._origHTML = orig;
+  cardEl.scrollIntoView({behavior:'smooth',block:'center'});
+  cardEl.querySelector('input[name="time"]').focus();
 }
 
 function cancelTimelineEdit(dayIdx, itemIdx, btn) {
@@ -688,6 +690,8 @@ function editHotel(dayIdx) {
     +'<button type="button" class="btn-cancel" onclick="cancelHotelEdit('+dayIdx+',this)">取消</button>'
     +'</form>';
   card._origHTML = orig;
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+  card.querySelector('input[name="name"]').focus();
 }
 
 function cancelHotelEdit(dayIdx, btn) {
@@ -808,6 +812,8 @@ function editFlight(i) {
     +'<button type="button" class="btn-cancel" onclick="cancelFlightEdit('+i+',this)">取消</button>'
     +'</form>';
   card._origHTML = orig;
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+  card.querySelector('input[name="dir"]').focus();
 }
 
 function cancelFlightEdit(i, btn) {
@@ -878,6 +884,8 @@ function editGearItem(sIdx, iIdx) {
     +'<button type="button" class="btn-cancel" onclick="cancelGearEdit('+sIdx+','+iIdx+',this)">取消</button>'
     +'</form>';
   itemEl._origHTML = orig;
+  itemEl.scrollIntoView({behavior:'smooth',block:'center'});
+  itemEl.querySelector('input[name="text"]').focus();
 }
 
 function cancelGearEdit(sIdx, iIdx, btn) {
