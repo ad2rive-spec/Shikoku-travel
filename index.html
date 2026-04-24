@@ -204,54 +204,56 @@ function buildDriveUrl(origin, destination) {
 }
 
 const DEFAULT_TRIP_DATA = [
-{day:1,date:"4月25日 週六",theme:"桃園→高松→板野",color:"#ff6d01",hotel:{name:"HOTEL AZ 徳島板野店",dates:"4/25",checkin:"21:00",checkout:"",cost:"6,050円 (現場付，地方稅另加)",address:"779-0102 徳島県板野郡板野町川端字新手崎27-1",booking:"樂天訂房",url:"https://maps.app.goo.gl/FcCqzuwGZiDjFdmJA"},items:[
+{day:1,date:"4月25日 週六",theme:"桃園→高松→板野",color:"#ff6d01",hotel:{name:"HOTEL AZ 徳島板野店",dates:"4/25",checkin:"21:00",checkout:"",cost:"6,050円 (現場付，地方稅另加)",address:"779-0102 徳島県板野郡板野町川端字新手崎27-1",booking:"樂天訂房",url:"https://maps.app.goo.gl/cSphQv1CmNAouPCn8"},items:[
 {time:"14:30",title:"CI178 桃園一航 → 高松機場",desc:"出發 14:30，抵達 18:05",type:"transport"},
 {time:"19:02",title:"高松機場大巴",desc:"搭乘機場大巴往高松駅 県民ホール・県立ミュージアム 行き，25分鐘",type:"transport",cost:"900円"},
 {time:"19:27",title:"栗林公園前站下車",desc:"走路10分鐘到JR栗林站",type:"transport"},
-{time:"20:10",title:"JR栗林站 → JR板野站",desc:"特急 Uzushio (うずしお) 號（往德島方向），45分鐘",type:"transport",cost:"2,440円"},
-{time:"21:00",title:"JR板野站",desc:"走路17分鐘到飯店",type:"transport"},
-{time:"",title:"HOTEL AZ 徳島板野店 Check-in",desc:"整體乘車約2小時（不含等車）",type:"hotel",url:"https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187551"}
+{time:"20:10",title:"JR栗林站 → JR板野站",desc:"特急 Uzushio (うずしお) 號（往德島方向），45分鐘，自由席",type:"transport",cost:"2,440円"},
+{time:"21:00",title:"JR板野站",desc:"走路17分鐘到飯店，整體乘車約2小時（不含等車）",type:"transport"},
+{time:"",title:"HOTEL AZ 徳島板野店 Check-in",desc:"有早餐",type:"hotel",url:"https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187551"}
 ]},
-{day:2,date:"4月26日 週日",theme:"德島遍路 第4~7番",color:"#ff6d01",hotel:{name:"越久田屋（おくだや）",dates:"4/26",checkin:"",checkout:"",cost:"5,500円 素泊まり (現金)",address:"徳島県阿波市土成町宮川内字宮ノ下31-1",booking:"henrohouse.jp",url:"https://henrohouse.jp/ja/houses/74"},items:[
-{time:"09:24",title:"道の駅いたの（道路站 板野）",desc:"走路3分鐘，搭車17分，走路1小時12分",type:"spot"},
-{time:"09:42",title:"大日寺口",desc:"47、48鍛冶屋原線（經由羅漢・東原），36分鐘",type:"transport",cost:"340円"},
-{time:"",title:"🙏 第4番 大日寺",desc:"走路18分，1.2公里",type:"spot",url:buildMapsSearchUrl("大日寺 徳島")},
-{time:"",title:"🙏 第5番 地藏寺",desc:"走路25分鐘，1.6公里",type:"spot",url:buildMapsSearchUrl("地蔵寺 徳島")},
-{time:"",title:"🙏 第6番 安樂寺",desc:"走路1小時8分鐘，5.2公里",type:"spot",url:buildMapsSearchUrl("安楽寺 徳島")},
-{time:"",title:"🙏 第7番 十樂寺",desc:"走路18分鐘，1.8公里。今日合計約15.2公里",type:"spot",url:buildMapsSearchUrl("十楽寺 徳島")},
-{time:"",title:"越久田屋 Check-in",desc:"附近有大型超市，可免費接送購物。也有走路8分鐘的溫泉",type:"hotel",url:"https://henrohouse.jp/ja/houses/74"}
+{day:2,date:"4月26日 週日",theme:"德島遍路 第4~7番",color:"#ff6d01",hotel:{name:"越久田屋（おくだや）",dates:"4/26",checkin:"",checkout:"",cost:"5,500円 素泊まり (現金)",address:"徳島県阿波市土成町宮川内字宮ノ下31-1",booking:"henrohouse.jp（一個月前可訂）",url:"https://henrohouse.jp/ja/houses/74"},items:[
+{time:"09:24",title:"道の駅いたの（道路站 板野）",desc:"走路3分鐘出發",type:"spot"},
+{time:"09:42",title:"大日寺口",desc:"搭47、48鍛冶屋原線（經由羅漢・東原），36分鐘。坐車17分，走路1小時12分",type:"transport",cost:"340円"},
+{time:"",title:"🙏 第4番 大日寺",desc:"黑巖山 遍照院 大日寺 だいにちじ｜走路18分，1.2公里",type:"spot",url:buildMapsSearchUrl("大日寺 徳島 板野")},
+{time:"",title:"🙏 第5番 地藏寺",desc:"無尽山 荘厳院 地蔵寺 じそうじ｜走路25分鐘，1.6公里",type:"spot",url:buildMapsSearchUrl("地蔵寺 徳島 板野")},
+{time:"",title:"🙏 第6番 安樂寺",desc:"溫泉山 瑠璃光院 安樂寺 あんらくじ｜走路1小時8分鐘，5.2公里",type:"spot",url:buildMapsSearchUrl("安楽寺 徳島 上板町")},
+{time:"",title:"🙏 第7番 十樂寺",desc:"光明山 蓮華院 十樂寺 じゅうらくじ｜走路18分鐘，1.8公里",type:"spot",url:buildMapsSearchUrl("十楽寺 徳島 阿波市")},
+{time:"",title:"越久田屋 Check-in",desc:"今日合計約15.2公里。附近有大型超市，可免費接送購物。也有走路8分鐘的溫泉",type:"hotel",url:"https://henrohouse.jp/ja/houses/74"}
 ]},
-{day:3,date:"4月27日 週一",theme:"德島遍路 第8~11番",color:"#ff6d01",hotel:{name:"旅館吉野",dates:"4/27",checkin:"",checkout:"",cost:"8,000円 一泊二食 (現金)",address:"776-0033 徳島県吉野川市鴨島町飯尾１４４４−１",booking:"11chikaku88@gmail.com (三個月前可)",url:"https://maps.app.goo.gl/sktXNJkFZ5LoNd2F7"},items:[
+{day:3,date:"4月27日 週一",theme:"德島遍路 第8~11番",color:"#ff6d01",hotel:{name:"旅館吉野",dates:"4/27",checkin:"",checkout:"",cost:"8,000円 一泊二食 (現金)",address:"776-0033 徳島県吉野川市鴨島町飯尾１４４４−１",booking:"11chikaku88@gmail.com（三個月前可訂）",url:"https://maps.app.goo.gl/sktXNJkFZ5LoNd2F7"},items:[
 {time:"",title:"越久田屋 出發",desc:"走路35分，2.1公里",type:"hotel"},
-{time:"",title:"🙏 第8番 熊谷寺",desc:"走路35分，2.4公里",type:"spot",url:buildMapsSearchUrl("熊谷寺 徳島")},
-{time:"",title:"🙏 第9番 法輪寺",desc:"9番前約有7-800公尺上坡，最後250公尺是階梯。走路1小時13分，4.8公里",type:"spot",url:buildMapsSearchUrl("法輪寺 徳島")},
-{time:"",title:"🙏 第10番 切幡寺",desc:"走路2小時20分，10.3公里",type:"spot",url:buildMapsSearchUrl("切幡寺 徳島")},
-{time:"",title:"🙏 第11番 藤井寺",desc:"表定8點-17點，時常提早。今日合計約17.5公里",type:"spot",url:buildMapsSearchUrl("藤井寺 徳島")},
+{time:"",title:"🙏 第8番 熊谷寺",desc:"普明山 真光院 熊谷寺 くまだにじ｜走路35分，2.4公里",type:"spot",url:buildMapsSearchUrl("熊谷寺 徳島 阿波市")},
+{time:"",title:"🙏 第9番 法輪寺",desc:"正覺山 菩提院 法輪寺 ほうりんじ｜9番前約有7-800公尺上坡，最後250公尺是階梯，最好在經過裱框店時取得同意先卸下背包。走路1小時13分，4.8公里",type:"spot",url:buildMapsSearchUrl("法輪寺 徳島 阿波市")},
+{time:"",title:"🙏 第10番 切幡寺",desc:"得度山 灌頂院 切幡寺 きりはたじ｜走路2小時20分，10.3公里",type:"spot",url:buildMapsSearchUrl("切幡寺 徳島 阿波市")},
+{time:"",title:"🙏 第11番 藤井寺",desc:"金剛山 一乗院 藤井寺 ふじいでら｜表定8點-17點，時常提早。走路17.5公里",type:"spot",url:buildMapsSearchUrl("藤井寺 徳島 吉野川市")},
 {time:"",title:"旅館吉野 Check-in",desc:"可提供300日圓午餐，可幫忙送行李",type:"hotel",url:"https://min88.jp/inn/141/"}
 ]},
-{day:4,date:"4月28日 週二",theme:"燒山寺（遍路最難關）",color:"#ff6d01",hotel:{name:"すだち庵",dates:"4/28",checkin:"17:00前",checkout:"",cost:"7,900円 一泊二食",address:"徳島県名西郡神山町下分字鍋岩180",booking:"null1903@gmail.com (英文)",url:"https://maps.app.goo.gl/ngvQSm6g8WLkPjf86"},items:[
+{day:4,date:"4月28日 週二",theme:"燒山寺（遍路最難關）",color:"#ff6d01",hotel:{name:"すだち庵",dates:"4/28",checkin:"17:00前",checkout:"",cost:"7,900円 一泊二食",address:"徳島県名西郡神山町下分字鍋岩180",booking:"null1903@gmail.com（英文信，三個月前可訂）",url:"https://maps.app.goo.gl/ngvQSm6g8WLkPjf86"},items:[
 {time:"",title:"旅館吉野 出發",desc:"走路5小時30分，13公里，爬升1160公尺，最後2公里最難，一般人平均要花六個小時",type:"hotel"},
-{time:"",title:"🙏 第12番 燒山寺",desc:"納經最後時間16:30。走路1小時30分，4.8公里",type:"spot",url:buildMapsSearchUrl("焼山寺 徳島")},
-{time:"",title:"すだち庵 Check-in",desc:"下午5點前抵達，可開車約10分鐘帶你去溫泉(600円)，隔日也可接送至山下公車站牌",type:"hotel",url:"https://www.sudachian.com/"}
+{time:"",title:"🙏 第12番 燒山寺",desc:"摩廬山 正壽院 燒山寺 しょうさんじ｜納經最後時間16:30。走路1小時30分，4.8公里",type:"spot",url:buildMapsSearchUrl("焼山寺 徳島 神山町")},
+{time:"",title:"すだち庵 Check-in",desc:"下午5點前抵達。可開車約10分鐘帶你去溫泉(600円)，隔日也可接送至山下公車站牌",type:"hotel",url:"https://www.sudachian.com/"}
 ]},
-{day:5,date:"4月29日 週三",theme:"德島市區 第13~16番",color:"#ff6d01",hotel:{name:"鱗楼（Urokoro）",dates:"4/29",checkin:"",checkout:"",cost:"7,150円 朝食付 (朝食6:30~8:00)",address:"779-3124 徳島県徳島市国府町中268-1",booking:"urokorou.com",url:"https://maps.app.goo.gl/o9oZiAopm6beNQsw8"},items:[
+{day:5,date:"4月29日 週三",theme:"德島市區 第13~16番",color:"#ff6d01",hotel:{name:"鱗楼（Urokoro）",dates:"4/29",checkin:"",checkout:"",cost:"7,150円 朝食付 (朝食6:30~8:00)",address:"779-3124 徳島県徳島市国府町中268-1",booking:"urokorou.com/contact/reservation",url:"https://maps.app.goo.gl/o9oZiAopm6beNQsw8"},items:[
 {time:"05:00",title:"すだち庵 起床出發",desc:"走公路，走路48分鐘，3.8公里",type:"hotel"},
-{time:"09:10",title:"神山高校前",desc:"62佐那河内線（さなごうちせん）到西地下車，搭車30分鐘",type:"transport",cost:"1,500円"},
+{time:"06:57",title:"神山高校前 出發",desc:"走路到公車站",type:"transport"},
+{time:"09:10",title:"搭62佐那河内線",desc:"（さなごうちせん）到西地下車，約30分鐘",type:"transport",cost:"1,500円"},
 {time:"08:58",title:"白鷺台回轉場",desc:"走路10分鐘到白鷺台回転場（しらさぎ台回転場）",type:"transport"},
 {time:"11:15",title:"轉乘18一宮線",desc:"入田天之原（經由一之宮）到一之宮札所前",type:"transport"},
-{time:"",title:"🙏 第13番 大日寺",desc:"走路36分鐘，2.6公里",type:"spot",url:buildMapsSearchUrl("大日寺 徳島市")},
-{time:"",title:"🙏 第14番 常樂寺",desc:"走路11分鐘，800公尺",type:"spot",url:buildMapsSearchUrl("常楽寺 徳島")},
-{time:"",title:"🙏 第15番 國分寺",desc:"走路27分鐘，2公里",type:"spot",url:buildMapsSearchUrl("国分寺 徳島")},
-{time:"",title:"🙏 第16番 觀音寺",desc:"今日合計約9.3公里",type:"spot",url:buildMapsSearchUrl("観音寺 徳島市")},
-{time:"",title:"鱗楼（Urokoro）Check-in",desc:"",type:"hotel",url:"https://urokorou.com/stay/"}
+{time:"",title:"🙏 第13番 大日寺",desc:"大栗山 花藏院 大日寺 だいにちじ｜走路36分鐘，2.6公里",type:"spot",url:buildMapsSearchUrl("大日寺 徳島市 国府町")},
+{time:"",title:"🙏 第14番 常樂寺",desc:"盛壽山 延命院 常樂寺 じょうらくじ｜走路11分鐘，800公尺",type:"spot",url:buildMapsSearchUrl("常楽寺 徳島市")},
+{time:"",title:"🙏 第15番 國分寺",desc:"藥王山 金色院 國分寺 こくぶんじ｜走路27分鐘，2公里",type:"spot",url:buildMapsSearchUrl("国分寺 徳島市")},
+{time:"",title:"🙏 第16番 觀音寺",desc:"光耀山 千手院 觀音寺 かんおんじ｜今日合計約9.3公里",type:"spot",url:buildMapsSearchUrl("観音寺 徳島市 国府町")},
+{time:"",title:"鱗楼（Urokoro）Check-in",desc:"朝食6:30~8:00",type:"hotel",url:"https://urokorou.com/stay/"}
 ]},
 {day:6,date:"4月30日 週四",theme:"第17番 → 德島 → 高松 → 回家",color:"#ff6d01",hotel:null,items:[
 {time:"",title:"鱗楼 出發",desc:"走路40分鐘，2.9公里",type:"hotel"},
-{time:"",title:"🙏 第17番 井戶寺",desc:"走路約25分，1.8公里",type:"spot",url:buildMapsSearchUrl("井戸寺 徳島")},
-{time:"10:11",title:"府中（德島）",desc:"德島線普通阿南，4站",type:"transport"},
+{time:"",title:"🙏 第17番 井戶寺",desc:"瑠璃山 真福院 井戸寺 いどじ｜走路約25分，1.8公里",type:"spot",url:buildMapsSearchUrl("井戸寺 徳島市")},
+{time:"10:11",title:"府中（德島）",desc:"走路到車站",type:"transport"},
+{time:"10:36",title:"府中駅 → 徳島駅",desc:"德島線普通阿南，4站",type:"transport"},
 {time:"10:49",title:"徳島駅前",desc:"步行約14分，1.0公里",type:"transport",cost:"320円"},
 {time:"",title:"德島城跡",desc:"順路參觀",type:"spot",url:buildMapsSearchUrl("徳島城跡")},
-{time:"14:24",title:"JR 特急 Uzushio 號",desc:"搭乘14:24或15:23發車的班次，前往高松",type:"transport",cost:"2,840円"},
+{time:"14:24",title:"JR 特急 Uzushio 號",desc:"搭乘14:24或15:23發車的班次，前往高松（約1小時）",type:"transport",cost:"2,840円"},
 {time:"15:41",title:"栗林公園前",desc:"走路10分鐘到高松機場",type:"transport",cost:"900円"},
 {time:"19:05",title:"✈️ CI179 飛回家",desc:"高松機場→桃園一航，20:55抵達",type:"transport"}
 ]}
@@ -296,7 +298,6 @@ const DEFAULT_GEAR_SECTIONS = [
 {text:"行動電源等",note:"導航非常耗電"},
 {text:"離線地圖",note:"建議下載 Google Maps 離線地圖或購買《四國遍路遊覽地圖》"},
 {text:"頭燈",note:""},
-{text:"保暖毯",note:""},
 {text:"保暖毯",note:""}
 ]},
 {title:"💊 藥品與個人護理",items:[
@@ -530,6 +531,7 @@ function editTimelineItem(dayIdx, itemIdx) {
     +'<input class="edit-input" name="title" placeholder="標題" value="'+escAttr(item.title||'')+'" required>'
     +'<textarea class="edit-textarea" name="desc" placeholder="說明">'+escHtml(item.desc||'')+'</textarea>'
     +'<input class="edit-input" name="cost" placeholder="費用 (e.g. 900円)" value="'+escAttr(item.cost||'')+'">'
+    +'<input class="edit-input" name="url" placeholder="📍 地圖/連結 URL（選填）" value="'+escAttr(item.url||'')+'">'
     +'<select class="edit-select" name="type">'
     +['spot','meal','transport','hotel','drive'].map(t=>'<option value="'+t+'"'+(item.type===t?' selected':'')+'>'+t+'</option>').join('')
     +'</select>'
@@ -554,6 +556,7 @@ function saveTimelineItem(e, dayIdx, itemIdx) {
   item.title = form.title.value.trim();
   item.desc = form.desc.value.trim();
   item.cost = form.cost.value.trim() || undefined;
+  item.url = form.url.value.trim() || undefined;
   item.type = form.type.value;
   sortDayItems(dayIdx);
   saveTrip();
