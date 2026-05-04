@@ -5,35 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>北海道花花旅 🌸</title>
+<title>四國遍路旅 🙏</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#f5f0ff;--card:#fff;--primary:#7c5cbf;--primary-light:#b4a7d6;
-  --accent:#e8a0bf;--text:#333;--text-light:#777;--shadow:0 2px 12px rgba(124,92,191,.12);
+  --bg:#fff8f0;--card:#fff;--primary:#e65100;--primary-light:#ffb74d;
+  --accent:#ff8a65;--text:#333;--text-light:#777;--shadow:0 2px 12px rgba(230,81,0,.12);
   --radius:16px;
 }
 body{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);padding-bottom:80px;-webkit-tap-highlight-color:transparent}
 /* top bar */
-.topbar{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#7c5cbf,#b4a7d6);color:#fff;padding:14px 16px 10px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.topbar{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#e65100,#ff8a65);color:#fff;padding:14px 16px 10px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
 .topbar h1{font-size:18px;font-weight:700;letter-spacing:1px}
 .topbar .subtitle{font-size:12px;opacity:.85;margin-top:2px}
 /* day tabs */
 .day-tabs{display:flex;overflow-x:auto;gap:8px;padding:12px 16px;position:sticky;top:62px;z-index:99;background:var(--bg);scrollbar-width:none;-ms-overflow-style:none}
 .day-tabs::-webkit-scrollbar{display:none}
-.day-tab{flex-shrink:0;padding:8px 16px;border-radius:20px;background:#fff;border:2px solid #e0d6f0;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap}
+.day-tab{flex-shrink:0;padding:8px 16px;border-radius:20px;background:#fff;border:2px solid #ffe0cc;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap}
 .day-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);transform:scale(1.05)}
 .day-tab .tab-date{font-size:10px;font-weight:400;opacity:.7;display:block}
 /* search */
 .search-wrap{padding:8px 16px}
-.search-wrap input{width:100%;padding:10px 14px 10px 38px;border-radius:12px;border:2px solid #e0d6f0;font-size:14px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%23999' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") 12px center no-repeat;outline:none;transition:.2s}
+.search-wrap input{width:100%;padding:10px 14px 10px 38px;border-radius:12px;border:2px solid #ffe0cc;font-size:14px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%23999' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") 12px center no-repeat;outline:none;transition:.2s}
 .search-wrap input:focus{border-color:var(--primary)}
 /* hotel info bar */
-.hotel-bar{margin:8px 16px;padding:12px 14px;background:linear-gradient(135deg,#ead1dc,#f5e6f0);border-radius:var(--radius);display:none;font-size:13px;line-height:1.6}
+.hotel-bar{margin:8px 16px;padding:12px 14px;background:linear-gradient(135deg,#ffe0b2,#fff3e0);border-radius:var(--radius);display:none;font-size:13px;line-height:1.6}
 .hotel-bar.show{display:block}
-.hotel-bar .hotel-name{font-weight:700;font-size:14px;color:#7c5cbf}
+.hotel-bar .hotel-name{font-weight:700;font-size:14px;color:#e65100}
 .hotel-bar .hotel-detail{color:#555}
-.hotel-bar a{color:#7c5cbf;text-decoration:underline}
+.hotel-bar a{color:#e65100;text-decoration:underline}
 /* timeline */
 .timeline{padding:0 16px}
 .timeline-item{position:relative;padding-left:28px;margin-bottom:4px}
@@ -91,30 +91,30 @@ body{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(-
 .gear-item .gear-text span{color:var(--text-light);font-size:12px}
 .gear-item.checked{background:#f0fff4}
 /* custom checkbox */
-.gear-checkbox{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:2px solid #b4a7d6;border-radius:4px;flex-shrink:0;margin-top:1px;cursor:pointer;position:relative;background:#fff;transition:.15s}
-.gear-checkbox:checked{background:#7c5cbf;border-color:#7c5cbf}
+.gear-checkbox{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:2px solid #ffb74d;border-radius:4px;flex-shrink:0;margin-top:1px;cursor:pointer;position:relative;background:#fff;transition:.15s}
+.gear-checkbox:checked{background:#e65100;border-color:#e65100}
 .gear-checkbox:checked::after{content:'';position:absolute;left:4px;top:1px;width:6px;height:10px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg)}
 /* edit button */
-.btn-edit{font-size:11px;padding:2px 6px;border-radius:8px;background:#f0ebff;color:#7c5cbf;border:1px solid #b4a7d6;cursor:pointer;float:right;margin-left:8px;flex-shrink:0}
+.btn-edit{font-size:11px;padding:2px 6px;border-radius:8px;background:#fff3e0;color:#e65100;border:1px solid #ffb74d;cursor:pointer;float:right;margin-left:8px;flex-shrink:0}
 /* reset button */
-.btn-reset{font-size:11px;padding:3px 10px;border-radius:10px;background:#f0ebff;color:#7c5cbf;border:1px solid #b4a7d6;cursor:pointer;float:right}
+.btn-reset{font-size:11px;padding:3px 10px;border-radius:10px;background:#fff3e0;color:#e65100;border:1px solid #ffb74d;cursor:pointer;float:right}
 /* edit form inputs */
-.edit-input{width:100%;padding:6px 8px;border:1.5px solid #b4a7d6;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit}
-.edit-input:focus{border-color:#7c5cbf}
-.edit-textarea{width:100%;padding:6px 8px;border:1.5px solid #b4a7d6;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit;resize:vertical;min-height:60px}
-.edit-select{width:100%;padding:6px 8px;border:1.5px solid #b4a7d6;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit;background:#fff}
-.btn-save{background:#7c5cbf;color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;margin-right:6px}
+.edit-input{width:100%;padding:6px 8px;border:1.5px solid #ffb74d;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit}
+.edit-input:focus{border-color:#e65100}
+.edit-textarea{width:100%;padding:6px 8px;border:1.5px solid #ffb74d;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit;resize:vertical;min-height:60px}
+.edit-select{width:100%;padding:6px 8px;border:1.5px solid #ffb74d;border-radius:8px;font-size:13px;margin-bottom:6px;outline:none;font-family:inherit;background:#fff}
+.btn-save{background:#e65100;color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;margin-right:6px}
 .btn-cancel{background:#eee;color:#555;border:none;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer}
 /* add item button */
-.btn-add-item{width:100%;padding:8px;border:2px dashed #b4a7d6;border-radius:12px;background:transparent;color:#7c5cbf;font-size:13px;cursor:pointer;margin-top:4px;font-family:inherit}
-.btn-add-item:hover{background:#f0ebff}
+.btn-add-item{width:100%;padding:8px;border:2px dashed #ffb74d;border-radius:12px;background:transparent;color:#e65100;font-size:13px;cursor:pointer;margin-top:4px;font-family:inherit}
+.btn-add-item:hover{background:#fff3e0}
 /* editable cost cell */
-.cost-cell-editable{cursor:pointer;border-bottom:1px dashed #b4a7d6}
-.cost-cell-editable:hover{background:#f0ebff;border-radius:4px}
+.cost-cell-editable{cursor:pointer;border-bottom:1px dashed #ffb74d}
+.cost-cell-editable:hover{background:#fff3e0;border-radius:4px}
 /* add timeline button */
 .timeline-item-add{padding:4px 0 8px}
-.btn-add-timeline{width:100%;padding:10px;border:2px dashed #b4a7d6;border-radius:14px;background:transparent;color:#7c5cbf;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
-.btn-add-timeline:hover{background:#f0ebff;border-color:#7c5cbf}
+.btn-add-timeline{width:100%;padding:10px;border:2px dashed #ffb74d;border-radius:14px;background:transparent;color:#e65100;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.2s}
+.btn-add-timeline:hover{background:#fff3e0;border-color:#e65100}
 /* panel header row */
 .panel-header{display:flex;align-items:center;margin-bottom:12px}
 .panel-header h2{font-size:16px;color:var(--primary);flex:1;margin-bottom:0}
@@ -124,8 +124,8 @@ body{font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;background:var(-
 <body>
 
 <div class="topbar">
-  <h1>🌸 北海道花花旅</h1>
-  <div class="subtitle">9天8晚 芝櫻・鬱金香・雪場蟹・溫泉 ｜ 5/16 - 5/24</div>
+  <h1>🙏 四國遍路旅</h1>
+  <div class="subtitle">6天5晚 德島發心道場 ｜ 4/25 - 4/30</div>
 </div>
 
 <div id="main-panel" class="panel active">
@@ -204,163 +204,153 @@ function buildDriveUrl(origin, destination) {
 }
 
 const DEFAULT_TRIP_DATA = [
-{day:1,date:"5月16日 週六",theme:"家 → 新千歲 → 薄野",color:"#ea9999",hotel:{name:"ホテルフォルツァ札幌駅前",dates:"5/16~18",checkin:"14:00",checkout:"11:00",cost:"NT.8,134/40,726円",address:"北海道, 札幌, Chuo-Ku Kita3Jo Nishi2Chome1-1",booking:"標準雙床房－附沙發 -- booking.com",url:buildMapsSearchUrl("ホテルフォルツァ札幌駅前")},items:[
-{time:"11:05",title:"抵達新千歲機場",desc:"虎航 IT234 桃園→新千歲，約1點出關",type:"transport"},
-{time:"12:05",title:"機場內美食",desc:"Kinotoya 起司塔、函太郎壽司(國內線3F)、北國壽司花BUSA、花畑牧場patas、帶廣豬肉丼",type:"meal"},
-{time:"",title:"搭 JR 快速 Airport (40分)",desc:"國內線航廈B1搭乘，建議買 U-Seat 指定席前往札幌站",type:"transport",cost:"2,070円"},
-{time:"14:30",title:"ホテルフォルツァ札幌駅前 Check-in",desc:"走路6分鐘到飯店",type:"hotel",url:buildMapsSearchUrl("ホテルフォルツァ札幌駅前")},
-{time:"15:00",title:"北海道大學",desc:"Marche Cafe & Labo 冰淇淋 熱奶",type:"spot",url:buildMapsSearchUrl("北大 Marche Café & Labo")},
-{time:"16:00",title:"Toriton Kita 8 迴轉壽司",desc:"拿候位可去逛 Sports Depo",type:"meal",url:"https://toriton-kita1.jp/shop/kita8/"},
-{time:"21:00",title:"Ario 札幌 - Workman Girl",desc:"21點關門",type:"spot",url:buildMapsSearchUrl("Ario 札幌")},
-{time:"",title:"搭千歲線 苗穗→札幌站",desc:"回飯店休息",type:"transport"}
+{day:1,date:"4月25日 週六",theme:"桃園→高松→板野",color:"#ff6d01",hotel:{name:"HOTEL AZ 徳島板野店",dates:"4/25",checkin:"21:00",checkout:"",cost:"6,050円 (現場付，地方稅另加)",address:"779-0102 徳島県板野郡板野町川端字新手崎27-1",booking:"樂天訂房",url:"https://maps.app.goo.gl/cSphQv1CmNAouPCn8"},items:[
+{time:"14:30",title:"CI178 桃園一航 → 高松機場",desc:"出發 14:30，抵達 18:05",type:"transport"},
+{time:"19:02",title:"高松機場大巴",desc:"搭乘機場大巴往高松駅 県民ホール・県立ミュージアム 行き，25分鐘",type:"transport",cost:"900円"},
+{time:"19:27",title:"栗林公園前站下車",desc:"走路10分鐘到JR栗林站",type:"transport"},
+{time:"20:10",title:"JR栗林站 → JR板野站",desc:"特急 Uzushio (うずしお) 號（往德島方向），45分鐘，自由席",type:"transport",cost:"2,440円"},
+{time:"21:00",title:"JR板野站",desc:"走路17分鐘到飯店，整體乘車約2小時（不含等車）",type:"transport"},
+{time:"",title:"HOTEL AZ 徳島板野店 Check-in",desc:"有早餐",type:"hotel",url:"https://hotel.travel.rakuten.co.jp/hotelinfo/plan/187551"}
 ]},
-{day:2,date:"5月17日 週日",theme:"札幌市區：丁香花祭",color:"#b4a7d6",hotel:{name:"ホテルフォルツァ札幌駅前",dates:"(續住)"},items:[
-{time:"11:00",title:"Dekitateya Tokeidai Branch",desc:"根室花丸一夜干，平均每人 ¥2,000-3,000",type:"meal",url:buildMapsSearchUrl("Dekitateya Tokeidai Branch")},
-{time:"12:30",title:"大通公園「札幌丁香祭」",desc:"Lilac Festival 札幌紫丁香節",type:"spot",url:buildMapsSearchUrl("大通公園 札幌")},
-{time:"13:00",title:"北海道立近代美術館",desc:"寶可夢×工藝展",type:"spot",url:buildMapsSearchUrl("北海道立近代美術館")},
-{time:"15:00",title:"北海道神宮",desc:"",type:"spot",url:buildMapsSearchUrl("北海道神宮")},
-{time:"18:30",title:"湯咖喱 奥芝商店 実家",desc:"蝦湯底，晚餐",type:"meal",url:buildMapsSearchUrl("湯咖喱 奥芝商店 実家")},
-{time:"",title:"大通站地下街逛回",desc:"買DONGURI 麵包當明天早餐",type:"spot"},
-{time:"",title:"回飯店",desc:"",type:"hotel"}
+{day:2,date:"4月26日 週日",theme:"德島遍路 第4~7番",color:"#ff6d01",hotel:{name:"越久田屋（おくだや）",dates:"4/26",checkin:"",checkout:"",cost:"5,500円 素泊まり (現金)",address:"徳島県阿波市土成町宮川内字宮ノ下31-1",booking:"henrohouse.jp（一個月前可訂）",url:"https://henrohouse.jp/ja/houses/74"},items:[
+{time:"09:24",title:"道の駅いたの（道路站 板野）",desc:"走路3分鐘出發",type:"spot"},
+{time:"09:42",title:"大日寺口",desc:"搭47、48鍛冶屋原線（經由羅漢・東原），36分鐘。坐車17分，走路1小時12分",type:"transport",cost:"340円"},
+{time:"",title:"🙏 第4番 大日寺",desc:"黑巖山 遍照院 大日寺 だいにちじ｜走路18分，1.2公里",type:"spot",url:buildMapsSearchUrl("大日寺 徳島 板野")},
+{time:"",title:"🙏 第5番 地藏寺",desc:"無尽山 荘厳院 地蔵寺 じそうじ｜走路25分鐘，1.6公里",type:"spot",url:buildMapsSearchUrl("地蔵寺 徳島 板野")},
+{time:"",title:"🙏 第6番 安樂寺",desc:"溫泉山 瑠璃光院 安樂寺 あんらくじ｜走路1小時8分鐘，5.2公里",type:"spot",url:buildMapsSearchUrl("安楽寺 徳島 上板町")},
+{time:"",title:"🙏 第7番 十樂寺",desc:"光明山 蓮華院 十樂寺 じゅうらくじ｜走路18分鐘，1.8公里",type:"spot",url:buildMapsSearchUrl("十楽寺 徳島 阿波市")},
+{time:"",title:"越久田屋 Check-in",desc:"今日合計約15.2公里。附近有大型超市，可免費接送購物。也有走路8分鐘的溫泉",type:"hotel",url:"https://henrohouse.jp/ja/houses/74"}
 ]},
-{day:3,date:"5月18日 週一",theme:"札幌 → 旭川",color:"#8e7cc3",hotel:{name:"OMO7 旭川 by 星野集團",dates:"5/18~19",checkin:"15:00",checkout:"11:00",cost:"NT.2,615/12,800円",address:"9 Chome-右１ 6 Jodori, Asahikawa, Hokkaido",booking:"官網訂",url:buildMapsSearchUrl("OMO7 旭川 by 星野リゾート")},items:[
-{time:"08:00",title:"飯店 Check-out → 旭川",desc:"JR 特急 丁香號Lilac/神威號Kamui (1.5hr)，一小時一班",type:"transport",cost:"5,440円"},
-{time:"09:30",title:"拿租車",desc:"toyota or orix 旭川站前",type:"transport"},
-{time:"",title:"🚗 旭川駅 → 上野ファーム",desc:"開車約40min",type:"drive",driveUrl:buildDriveUrl("旭川駅","上野ファーム")},
-{time:"10:00",title:"上野農場 Ueno Farm",desc:"北海道花園之路必訪",type:"spot",cost:"1,000円",url:"https://uenofarm.net/"},
-{time:"",title:"🚗 上野ファーム → 旭山動物園",desc:"開車約30min",type:"drive",driveUrl:buildDriveUrl("上野ファーム","旭山動物園")},
-{time:"13:30",title:"旭山動物園",desc:"9:30〜17:15，正門第一駐車場(免費)，開車30分鐘",type:"spot",cost:"1,000円",url:buildMapsSearchUrl("旭山動物園")},
-{time:"",title:"🚗 旭山動物園 → ワークマンプラス旭川",desc:"開車約20min",type:"drive",driveUrl:buildDriveUrl("旭山動物園","ワークマンプラス旭川")},
-{time:"18:00",title:"Workman plus",desc:"購物",type:"spot",url:buildMapsSearchUrl("ワークマンプラス 旭川")},
-{time:"20:30",title:"七輪燒肉 安安 旭川川端店",desc:"晚餐燒肉",type:"meal",url:buildMapsSearchUrl("七輪燒肉 安安 旭川川端店")},
-{time:"",title:"OMO7 Check-in",desc:"",type:"hotel"}
+{day:3,date:"4月27日 週一",theme:"德島遍路 第8~11番",color:"#ff6d01",hotel:{name:"旅館吉野",dates:"4/27",checkin:"",checkout:"",cost:"8,000円 一泊二食 (現金)",address:"776-0033 徳島県吉野川市鴨島町飯尾１４４４−１",booking:"11chikaku88@gmail.com（三個月前可訂）",url:"https://maps.app.goo.gl/sktXNJkFZ5LoNd2F7"},items:[
+{time:"",title:"越久田屋 出發",desc:"走路35分，2.1公里",type:"hotel"},
+{time:"",title:"🙏 第8番 熊谷寺",desc:"普明山 真光院 熊谷寺 くまだにじ｜走路35分，2.4公里",type:"spot",url:buildMapsSearchUrl("熊谷寺 徳島 阿波市")},
+{time:"",title:"🙏 第9番 法輪寺",desc:"正覺山 菩提院 法輪寺 ほうりんじ｜9番前約有7-800公尺上坡，最後250公尺是階梯，最好在經過裱框店時取得同意先卸下背包。走路1小時13分，4.8公里",type:"spot",url:buildMapsSearchUrl("法輪寺 徳島 阿波市")},
+{time:"",title:"🙏 第10番 切幡寺",desc:"得度山 灌頂院 切幡寺 きりはたじ｜走路2小時20分，10.3公里",type:"spot",url:buildMapsSearchUrl("切幡寺 徳島 阿波市")},
+{time:"",title:"🙏 第11番 藤井寺",desc:"金剛山 一乗院 藤井寺 ふじいでら｜表定8點-17點，時常提早。走路17.5公里",type:"spot",url:buildMapsSearchUrl("藤井寺 徳島 吉野川市")},
+{time:"",title:"旅館吉野 Check-in",desc:"可提供300日圓午餐，可幫忙送行李",type:"hotel",url:"https://min88.jp/inn/141/"}
 ]},
-{day:4,date:"5月19日 週二",theme:"道東花海：芝櫻滿開與活蟹饗宴",color:"#8e7cc3",hotel:{name:"紋別プリンスホテル別館",dates:"5/19~20",checkin:"15:00",checkout:"11:00",cost:"NT.3,582 (含早餐¥17,831)",address:"Mombetsu",booking:"skyticket.jp (05/18後無法退)",url:buildMapsSearchUrl("紋別プリンスホテル")},items:[
-{time:"09:00",title:"飯店 Check-out",desc:"附早餐",type:"hotel"},
-{time:"",title:"🚗 OMO7旭川 → 瀧上芝桜公園",desc:"開車約2hr",type:"drive",driveUrl:buildDriveUrl("OMO7旭川","瀧上芝桜公園")},
-{time:"11:00",title:"瀧上芝櫻公園",desc:"必吃芝櫻霜淇淋 🍦",type:"spot",cost:"500円",url:buildMapsSearchUrl("瀧上芝桜公園")},
-{time:"",title:"🚗 瀧上芝桜公園 → 紋別",desc:"開車約40min",type:"drive",driveUrl:buildDriveUrl("瀧上芝桜公園","紋別")},
-{time:"13:30",title:"午餐：海鮮",desc:"Marutomi 海鮮問屋 或 Marukaichi水產 海鮮爐端燒（海鮮丼與烤魚定食）",type:"meal",url:buildMapsSearchUrl("Marukaichi水産 紋別")},
-{time:"15:30",title:"鄂霍次克流冰科學中心",desc:"看冰流",type:"spot",cost:"990円",url:buildMapsSearchUrl("オホーツク流氷科学センター")},
-{time:"",title:"🚗 オホーツク流氷科学センター → 出塚水産",desc:"開車約5min",type:"drive",driveUrl:buildDriveUrl("オホーツク流氷科学センター","出塚水産")},
-{time:"",title:"出塚水産㈱ 魚板",desc:"出名魚板小吃與免費咖啡",type:"meal",url:buildMapsSearchUrl("出塚水産 紋別")},
-{time:"17:00",title:"紋別地標「巨型蟹爪雕像」",desc:"就在旁邊拍照",type:"spot",url:buildMapsSearchUrl("紋別 カニの爪")},
-{time:"",title:"晚餐：海鮮遊食 Rin",desc:"活雪場蟹 (Snow Crab) 推薦點「濱茹」",type:"meal",url:"https://tabelog.com/tw/hokkaido/A0110/A011004/1008482/"},
-{time:"",title:"紋別王子飯店 Check-in",desc:"",type:"hotel"}
+{day:4,date:"4月28日 週二",theme:"燒山寺（遍路最難關）",color:"#ff6d01",hotel:{name:"すだち庵",dates:"4/28",checkin:"17:00前",checkout:"",cost:"7,900円 一泊二食",address:"徳島県名西郡神山町下分字鍋岩180",booking:"null1903@gmail.com（英文信，三個月前可訂）",url:"https://maps.app.goo.gl/ngvQSm6g8WLkPjf86"},items:[
+{time:"",title:"旅館吉野 出發",desc:"走路5小時30分，13公里，爬升1160公尺，最後2公里最難，一般人平均要花六個小時",type:"hotel"},
+{time:"",title:"🙏 第12番 燒山寺",desc:"摩廬山 正壽院 燒山寺 しょうさんじ｜納經最後時間16:30。走路1小時30分，4.8公里",type:"spot",url:buildMapsSearchUrl("焼山寺 徳島 神山町")},
+{time:"",title:"すだち庵 Check-in",desc:"下午5點前抵達。可開車約10分鐘帶你去溫泉(600円)，隔日也可接送至山下公車站牌",type:"hotel",url:"https://www.sudachian.com/"}
 ]},
-{day:5,date:"5月20日 週三",theme:"鬱金香花海與地質奇觀（紋別→湧別→層雲峽）",color:"#cfe2f3",hotel:{name:"ホテル大雪",dates:"5/20~21",checkin:"15:00",checkout:"11:00",cost:"NT.6,998/¥34,108 (含早晚餐)",address:"層雲峽",booking:"Agoda (05/09扣款)",url:buildMapsSearchUrl("ホテル大雪 層雲峡")},items:[
-{time:"",title:"飯店早餐 Check-out",desc:"",type:"hotel"},
-{time:"",title:"🚗 紋別プリンスホテル → 上湧別チューリップ公園",desc:"開車約40min",type:"drive",driveUrl:buildDriveUrl("紋別プリンスホテル","上湧別チューリップ公園")},
-{time:"09:30",title:"上湧別鬱金香公園",desc:"鬱金香花海 🌷",type:"spot",cost:"600円",url:buildMapsSearchUrl("上湧別チューリップ公園")},
-{time:"",title:"🚗 上湧別チューリップ公園 → セイコーマート遠軽",desc:"開車約20min",type:"drive",driveUrl:buildDriveUrl("上湧別チューリップ公園","セイコーマート遠軽")},
-{time:"12:00",title:"午餐",desc:"遠輕町 Seicomart 便利商店",type:"meal",url:buildMapsSearchUrl("セイコーマート 遠軽")},
-{time:"",title:"🚗 セイコーマート遠軽 → 太陽の丘えんがる公園",desc:"開車約10min",type:"drive",driveUrl:buildDriveUrl("セイコーマート遠軽","太陽の丘えんがる公園")},
-{time:"14:00",title:"遠輕太陽之丘",desc:"可看另一片芝櫻，進入大雪山國立公園範圍",type:"spot",cost:"600円",url:buildMapsSearchUrl("太陽の丘えんがる公園")},
-{time:"",title:"🚗 太陽の丘えんがる公園 → ホテル大雪",desc:"開車約1.5hr",type:"drive",driveUrl:buildDriveUrl("太陽の丘えんがる公園","ホテル大雪")},
-{time:"",title:"ホテル大雪 Check-in",desc:"晚餐在飯店享用，晚上非常適合觀星 ⭐",type:"hotel"}
+{day:5,date:"4月29日 週三",theme:"德島市區 第13~16番",color:"#ff6d01",hotel:{name:"鱗楼（Urokoro）",dates:"4/29",checkin:"",checkout:"",cost:"7,150円 朝食付 (朝食6:30~8:00)",address:"779-3124 徳島県徳島市国府町中268-1",booking:"urokorou.com/contact/reservation",url:"https://maps.app.goo.gl/o9oZiAopm6beNQsw8"},items:[
+{time:"05:00",title:"すだち庵 起床出發",desc:"走公路，走路48分鐘，3.8公里",type:"hotel"},
+{time:"06:57",title:"神山高校前 出發",desc:"走路到公車站",type:"transport"},
+{time:"09:10",title:"搭62佐那河内線",desc:"（さなごうちせん）到西地下車，約30分鐘",type:"transport",cost:"1,500円"},
+{time:"08:58",title:"白鷺台回轉場",desc:"走路10分鐘到白鷺台回転場（しらさぎ台回転場）",type:"transport"},
+{time:"11:15",title:"轉乘18一宮線",desc:"入田天之原（經由一之宮）到一之宮札所前",type:"transport"},
+{time:"",title:"🙏 第13番 大日寺",desc:"大栗山 花藏院 大日寺 だいにちじ｜走路36分鐘，2.6公里",type:"spot",url:buildMapsSearchUrl("大日寺 徳島市 国府町")},
+{time:"",title:"🙏 第14番 常樂寺",desc:"盛壽山 延命院 常樂寺 じょうらくじ｜走路11分鐘，800公尺",type:"spot",url:buildMapsSearchUrl("常楽寺 徳島市")},
+{time:"",title:"🙏 第15番 國分寺",desc:"藥王山 金色院 國分寺 こくぶんじ｜走路27分鐘，2公里",type:"spot",url:buildMapsSearchUrl("国分寺 徳島市")},
+{time:"",title:"🙏 第16番 觀音寺",desc:"光耀山 千手院 觀音寺 かんおんじ｜今日合計約9.3公里",type:"spot",url:buildMapsSearchUrl("観音寺 徳島市 国府町")},
+{time:"",title:"鱗楼（Urokoro）Check-in",desc:"朝食6:30~8:00",type:"hotel",url:"https://urokorou.com/stay/"}
 ]},
-{day:6,date:"5月21日 週四",theme:"高山殘雪・層雲峽→札幌",color:"#cfe2f3",hotel:{name:"VESSEL HOTEL CAMPANA SUSUKINO",dates:"5/21~22",checkin:"14:00",checkout:"11:00",cost:"NT.4,293/20,470円",address:"薄野",booking:"官網訂-到店付",url:buildMapsSearchUrl("VESSEL HOTEL CAMPANA SUSUKINO")},items:[
-{time:"",title:"🚗 ホテル大雪 → 黒岳ロープウェイ",desc:"開車約5min",type:"drive",driveUrl:buildDriveUrl("ホテル大雪","黒岳ロープウェイ")},
-{time:"08:00",title:"黑岳纜車",desc:"8:00-16:00 營運，來回 ¥3,000/人",type:"spot",cost:"3,000円",url:"https://www.rinyu.co.jp/kurodake/"},
-{time:"",title:"🚗 黒岳ロープウェイ → 銀河・流星の滝",desc:"開車約10min",type:"drive",driveUrl:buildDriveUrl("黒岳ロープウェイ","銀河・流星の滝")},
-{time:"",title:"銀河・流星の滝",desc:"往前一點開車路上",type:"spot",url:buildMapsSearchUrl("銀河・流星の滝")},
-{time:"",title:"🚗 銀河・流星の滝 → 旭川駅",desc:"開車約1.5hr",type:"drive",driveUrl:buildDriveUrl("銀河・流星の滝","旭川駅")},
-{time:"18:00",title:"還車",desc:"返回旭川站前還車",type:"transport"},
-{time:"",title:"JR 特急 丁香號/神威號",desc:"前往札幌 (1.5hr)，一小時一班",type:"transport",cost:"5,440円"},
-{time:"",title:"VESSEL HOTEL Check-in",desc:"薄野地區",type:"hotel"},
-{time:"",title:"晚餐",desc:"GARAKU 湯咖哩 或 Sushi Donburi 海鮮，平均每人 ¥1,000-2,000",type:"meal",url:buildMapsSearchUrl("Soup Curry GARAKU")}
-]},
-{day:7,date:"5月22日 週五",theme:"小樽一日遊",color:"#ead1dc",hotel:{name:"THE KNOT SAPPORO",dates:"5/22~23",checkin:"15:00",checkout:"11:00",cost:"TWD 4,185/¥20,952",booking:"booking.com",url:buildMapsSearchUrl("THE KNOT SAPPORO")},items:[
-{time:"",title:"VESSEL 飯店 Check-out",desc:"早餐 6:45開始",type:"hotel"},
-{time:"09:00",title:"JR or bus → 小樽",desc:"約40分鐘",type:"transport",cost:"1,640円"},
-{time:"",title:"堺町通商店街",desc:"北一硝子、小樽音樂盒堂、田中酒造龜甲藏、LeTAO 本店吃起司蛋糕 🧀",type:"spot",url:buildMapsSearchUrl("堺町通 小樽")},
-{time:"",title:"搭 JR 返回札幌",desc:"約45分鐘",type:"transport"},
-{time:"",title:"THE KNOT SAPPORO Check-in",desc:"",type:"hotel"},
-{time:"",title:"晚餐：冰雪之門 或 蟹本家",desc:"最後一晚的奢華蟹料理全餐 🦀",type:"meal",url:buildMapsSearchUrl("蟹本家 札幌")},
-{time:"",title:"藥妝購物",desc:"Satudora 札幌藥妝(到21點)、大國藥妝、唐吉訶德(24小時)",type:"spot",url:buildMapsSearchUrl("サツドラ 札幌")}
-]},
-{day:8,date:"5月23日 週六",theme:"札幌最後巡禮 → 新千歲",color:"#ead1dc",hotel:{name:"Air Terminal Hotel (新千歲機場航廈飯店)",dates:"5/23~24",checkin:"14:00",checkout:"11:00",cost:"NT.4,212/¥20,532 (含早餐)",booking:"Agoda (0518扣款)",url:buildMapsSearchUrl("新千歳空港 エアターミナルホテル")},items:[
-{time:"07:00",title:"二條市場 海鮮丼早餐",desc:"推薦 丼兵衛、大磯 或 Donburi Chaya",type:"meal",url:buildMapsSearchUrl("二條市場 札幌")},
-{time:"",title:"逛札幌百貨 狸小路藥妝",desc:"最後採購機會",type:"spot",url:buildMapsSearchUrl("狸小路 札幌")},
-{time:"",title:"午餐",desc:"札幌拉麵 悠 四種起司拉麵 或 Sushi Donburi 海鮮蓋飯",type:"meal",url:buildMapsSearchUrl("札幌拉麵 悠")},
-{time:"17:30",title:"搭機場巴士",desc:"搭機場巴士前往新千歲",type:"transport",url:"https://www.hokto.co.jp/zh_tw/sapporo-chitose/"},
-{time:"",title:"Air Terminal Hotel Check-in",desc:"Kinotoya 冰淇淋+起司塔 🍦",type:"hotel"}
-]},
-{day:9,date:"5月24日 週日",theme:"返家日",color:"#ea9999",hotel:null,items:[
-{time:"",title:"飯店 Check-out",desc:"逛千歲機場",type:"hotel"},
-{time:"",title:"機場購物",desc:"國內線2樓: LeTAO, 六花亭, 北菓樓 (需冷藏甜點)、ぎょれん冷凍漁產、青里/男山",type:"spot"},
-{time:"12:05",title:"✈️ 飛飛飛 回家",desc:"虎航 IT235 新千歲→桃園，15:20抵達",type:"transport"}
+{day:6,date:"4月30日 週四",theme:"第17番 → 德島 → 高松 → 回家",color:"#ff6d01",hotel:null,items:[
+{time:"",title:"鱗楼 出發",desc:"走路40分鐘，2.9公里",type:"hotel"},
+{time:"",title:"🙏 第17番 井戶寺",desc:"瑠璃山 真福院 井戸寺 いどじ｜走路約25分，1.8公里",type:"spot",url:buildMapsSearchUrl("井戸寺 徳島市")},
+{time:"10:11",title:"府中（德島）",desc:"走路到車站",type:"transport"},
+{time:"10:36",title:"府中駅 → 徳島駅",desc:"德島線普通阿南，4站",type:"transport"},
+{time:"10:49",title:"徳島駅前",desc:"步行約14分，1.0公里",type:"transport",cost:"320円"},
+{time:"",title:"德島城跡",desc:"順路參觀",type:"spot",url:buildMapsSearchUrl("徳島城跡")},
+{time:"14:24",title:"JR 特急 Uzushio 號",desc:"搭乘14:24或15:23發車的班次，前往高松（約1小時）",type:"transport",cost:"2,840円"},
+{time:"15:41",title:"栗林公園前",desc:"走路10分鐘到高松機場",type:"transport",cost:"900円"},
+{time:"19:05",title:"✈️ CI179 飛回家",desc:"高松機場→桃園一航，20:55抵達",type:"transport"}
 ]}
 ];
 
 const DEFAULT_FLIGHTS = [
-{dir:"去程",route:"桃園一航 → CTS 新千歲機場",airline:"虎航",code:"IT234",depart:"06:20",arrive:"11:05",seat:"8E/8F"},
-{dir:"回程",route:"CTS 新千歲機場 → 桃園一航",airline:"虎航",code:"IT235",depart:"12:05",arrive:"15:20",seat:"8E/8F"}
+{dir:"去程",route:"桃園一航 → TAK 高松機場",airline:"華航",code:"CI178",depart:"14:30",arrive:"18:05",seat:""},
+{dir:"回程",route:"TAK 高松機場 → 桃園一航",airline:"華航",code:"CI179",depart:"19:05",arrive:"20:55",seat:""}
 ];
 
 const DEFAULT_GEAR_SECTIONS = [
-{title:"👕 衣物穿著（5/16~5/24 氣候：10°C - 20°C）",items:[
-{text:"底層：排汗速乾衣",note:"建議兩套替換，一穿一備"},
-{text:"中層：薄刷毛或保暖外套",note:"早晚及山區微涼時穿著"},
-{text:"外層：防水機能外套（或輕便雨衣）",note:"北海道天氣多變"},
-{text:"下身：休閒長褲或快乾褲",note:""},
-{text:"舒適步行鞋",note:"建議已磨合過的防滑運動鞋"},
-{text:"防水鞋套",note:"雨天備用"},
-{text:"厚襪子",note:"山區溫度低"},
-{text:"配件：帽子、手套、圍巾",note:"山區纜車站氣溫低"}
+{title:"⛩️ 遍路必備法具",items:[
+{text:"金剛杖 (Kongōzue)",note:"象徵與弘法大師同行，也是登山時的重要支撐"},
+{text:"白衣 (Hakui)",note:"穿在最外層的白色背心或外套，代表朝聖者身份"},
+{text:"菅笠 (Sugegasa)",note:"傳統斗笠，遮陽擋雨效果極佳（進入寺院參拜不需脫帽）"},
+{text:"輪袈裟 (Wagesa)",note:"參拜時圍在脖子上的法衣"},
+{text:"納經帳 (Nōkyōchō)",note:"收集各番寺院朱印的手冊"},
+{text:"納札 (Osamefuda)",note:"寫上名字與心願，在每間寺廟的大師堂與本堂投入"},
+{text:"頭陀袋 (Zudabukuro)",note:"專門裝放納經帳、線香、蠟燭、硬幣的斜背包、太陽眼鏡"},
+{text:"線香、蠟燭與打火機",note:"參拜時使用"}
+]},
+{title:"👕 衣物穿著（4/25~4/30 氣候：10°C - 23°C）",items:[
+{text:"底層：排汗速乾衣",note:"建議兩套替換，一穿一備。RIDGE"},
+{text:"中層：薄刷毛或防風輕便外套",note:"早晚及山區微涼時穿著"},
+{text:"外層：防水機能外套（或輕便雨衣）",note:""},
+{text:"下身：登山快乾褲",note:""},
+{text:"健行鞋",note:"建議已磨合過的防滑運動鞋"},
+{text:"鞋子防水套（短板）",note:""},
+{text:"五指襪",note:"強烈建議！有效減少腳趾摩擦，防止長水泡"},
+{text:"配件：遮陽帽、袖套（防曬用）、手套",note:""}
 ]},
 {title:"🎒 個人裝備與電子用品",items:[
-{text:"旅行背包",note:""},
-{text:"輕便購物袋",note:"藥妝掃貨用"},
-{text:"雨具：折疊傘或輕便雨衣",note:""},
-{text:"水壺",note:""},
-{text:"現金（日幣）",note:"部分景點、餐廳僅收現金"},
-{text:"行動電源",note:"導航非常耗電"},
-{text:"離線地圖",note:"建議下載 Google Maps 離線地圖"},
-{text:"JR Pass 或 IC 卡",note:"搭乘 JR 必備"},
-{text:"國際駕照",note:"旭川租車必備"},
-{text:"相機/手機充電線",note:""}
+{text:"登山杖",note:"HELINOX PASSPORT 二手3800"},
+{text:"輕便鞋",note:""},
+{text:"背包：20L-30L 登山背包（含雨罩）",note:"yamatomichi mini M"},
+{text:"攻頂背包",note:""},
+{text:"雨具：兩截式雨衣或大斗篷式雨衣",note:"需能覆蓋背包"},
+{text:"鞋套",note:""},
+{text:"水壺/水袋",note:"隨時補水。snowpeak 鈦"},
+{text:"熱水杯",note:""},
+{text:"現金（日幣）",note:"許多鄉下民宿或納經所僅收現金，需準備大量5圓與10圓硬幣供參拜使用"},
+{text:"行動電源等",note:"導航非常耗電"},
+{text:"離線地圖",note:"建議下載 Google Maps 離線地圖或購買《四國遍路遊覽地圖》"},
+{text:"頭燈",note:""},
+{text:"保暖毯",note:""}
 ]},
 {title:"💊 藥品與個人護理",items:[
+{text:"防水泡用品",note:"凡士林（塗在腳趾減少摩擦）、人工皮、OK 繃"},
+{text:"痠痛貼布/噴霧",note:"連走六天非常需要"},
 {text:"防曬乳與護唇膏",note:"戶外紫外線強"},
-{text:"常備藥",note:"感冒藥、腸胃藥、止痛藥"},
-{text:"保養用品",note:"洗髮精、洗臉乳、乳液"},
+{text:"常備藥",note:"感冒藥、腸胃藥、止痛藥、Correct X紅十字凝膠（抗菌消炎）"},
+{text:"按摩儀",note:"達摩經絡按摩儀、刮痧板、按摩油"},
+{text:"保養用品",note:"洗髮皂、洗臉乳、乳液、潤色隔離霜"},
+{text:"護髮油",note:""},
 {text:"咖啡包、口罩",note:""},
 {text:"自拍棒",note:""},
-{text:"日本 SIM 卡或 eSIM",note:"建議出發前購買"}
+{text:"DJB sim卡、skype點數",note:""},
+{text:"日本原生 eSIM",note:"tabiesim.jp"}
 ]}
 ];
 
-const DEFAULT_GEAR_CHECKS_CORRECT = {};
+// Default checked states matching original file
+const DEFAULT_GEAR_CHECKS = {
+  "2-3":true,"2-5":true,
+  "3-3":true,"3-5":true,
+  "1-1":true,"1-2":true,"1-3":true,"1-4":true,"1-5":true,"1-6":true,"1-7":true,
+  "3-13":true,"3-14":true
+};
+// Mapping from original array indices (0-based section, 0-based item) to DEFAULT_GEAR_CHECKS keys
+// Section 0 (遍路法具): all unchecked
+// Section 1 (衣物): all unchecked
+// Section 2 (裝備): item 3=攻頂背包(checked), item 5=鞋套(checked), item 12=保暖毯(checked), item 13=保暖毯(checked)
+// Section 3 (藥品): item 1=痠痛(checked), item 2=防曬(checked), item 3=常備藥(checked), item 5=保養(checked), item 7=咖啡包(checked)
+const DEFAULT_GEAR_CHECKS_CORRECT = {
+  "2-3":true,"2-5":true,"2-12":true,"2-13":true,
+  "3-1":true,"3-2":true,"3-3":true,"3-5":true,"3-7":true
+};
 
 const DEFAULT_COST_DATA = {
   hotel:[
-    {name:"ホテルフォルツァ札幌駅前 (2晚)",cost:"NT.8,134"},
-    {name:"OMO7 旭川 by 星野集團 (1晚)",cost:"NT.2,615"},
-    {name:"紋別プリンスホテル (1晚,含早)",cost:"NT.3,582"},
-    {name:"ホテル大雪 (1晚,含早晚)",cost:"NT.6,998"},
-    {name:"VESSEL HOTEL CAMPANA (1晚)",cost:"NT.4,293"},
-    {name:"THE KNOT SAPPORO (1晚)",cost:"NT.4,185"},
-    {name:"Air Terminal Hotel (1晚,含早)",cost:"NT.4,212"}
+    {name:"HOTEL AZ 徳島板野店 (1晚)",cost:"6,050円"},
+    {name:"越久田屋（おくだや）(1晚,素泊)",cost:"5,500円"},
+    {name:"旅館吉野 (1晚,一泊二食)",cost:"8,000円"},
+    {name:"すだち庵 (1晚,一泊二食)",cost:"7,900円"},
+    {name:"鱗楼（Urokoro）(1晚,朝食付)",cost:"7,150円"}
   ],
-  hotelTotal:"NT.34,019",
+  hotelTotal:"約 34,600円",
   transport:[
-    {name:"JR 快速 Airport (新千歲→札幌)",cost:"2,070円"},
-    {name:"JR 特急 丁香號 (札幌→旭川)",cost:"5,440円"},
-    {name:"JR 特急 丁香號 (旭川→札幌)",cost:"5,440円"},
-    {name:"JR 札幌→小樽",cost:"1,640円"}
-  ],
-  ticket:[
-    {name:"上野農場",cost:"1,000円"},
-    {name:"旭山動物園",cost:"1,000円"},
-    {name:"瀧上芝櫻公園",cost:"500円"},
-    {name:"鄂霍次克流冰科學中心",cost:"990円"},
-    {name:"上湧別鬱金香公園",cost:"600円"},
-    {name:"遠輕太陽之丘",cost:"600円"},
-    {name:"黑岳纜車 (來回)",cost:"3,000円"}
+    {name:"機場大巴 高松機場→栗林公園前",cost:"900円"},
+    {name:"JR 特急 Uzushio 栗林→板野",cost:"2,440円"},
+    {name:"德島巴士 大日寺口",cost:"340円"},
+    {name:"德島巴士 神山高校前",cost:"1,500円"},
+    {name:"JR 德島→高松 特急 Uzushio",cost:"2,840円"},
+    {name:"機場大巴 栗林公園前→高松機場",cost:"900円"}
   ],
   flight:[
-    {name:"虎航 IT234/IT235 來回",cost:"依購票時價格"}
+    {name:"華航 CI178/CI179 來回",cost:"NT.13,369"}
   ]
 };
 
@@ -442,7 +432,7 @@ TRIP_DATA.forEach((d,i)=>{
 
 const allTab = document.createElement('div');
 allTab.className = 'day-tab';
-allTab.innerHTML = '全部<span class="tab-date">9天</span>';
+allTab.innerHTML = '全部<span class="tab-date">6天</span>';
 allTab.dataset.day = 0;
 allTab.onclick = ()=> selectDay(0);
 tabsEl.prepend(allTab);
@@ -750,17 +740,6 @@ function renderCosts(){
       +'<td><span class="cost-cell-editable" data-section="transport" data-idx="'+i+'" onclick="editCostCell(this,\'transport\','+i+')">'+escHtml(t.cost)+'</span></td></tr>';
   });
   html += '</table>';
-
-  // Ticket costs (optional section)
-  if(costData.ticket && costData.ticket.length) {
-    html += '<h3 style="font-size:14px;margin:16px 0 8px">🎫 門票費用 (每人)</h3>'
-      +'<table class="cost-table"><tr><th>景點</th><th>費用</th></tr>';
-    costData.ticket.forEach((t, i)=>{
-      html += '<tr><td>'+escHtml(t.name)+'</td>'
-        +'<td><span class="cost-cell-editable" data-section="ticket" data-idx="'+i+'" onclick="editCostCell(this,\'ticket\','+i+')">'+escHtml(t.cost)+'</span></td></tr>';
-    });
-    html += '</table>';
-  }
 
   // Flight costs
   html += '<h3 style="font-size:14px;margin:16px 0 8px">✈️ 機票 (NT)</h3>'
